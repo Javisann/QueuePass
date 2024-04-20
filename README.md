@@ -20,7 +20,8 @@ La aplicación, QueuePass, es una solución innovadora diseñada para mejorar la
 - Java
 - Spring Boot
 - MySQL
-- HTML/CSS
+- HTML
+- CSS
 - JavaScript
 ## Features
 
