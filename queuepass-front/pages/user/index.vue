@@ -41,4 +41,10 @@ function joinQueue(newPeople) {
   people.value = newPeople; // Coge parametros del evento y se los asigna a la variable anterior
   inQueue.value = !inQueue.value; // Cambia el estado al contrario al que este
 }
+
+
+definePageMeta({
+    layout:"user"
+})
+
 </script>

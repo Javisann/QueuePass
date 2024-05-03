@@ -15,7 +15,7 @@
 
         <input type="text" id="quantity-input" v-model="people" data-input-counter
           aria-describedby="helper-text-explanation"
-          class="w-20 bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class=" bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="0" required disabled />
         <button type="button" id="increment-button" @click="people <= 10 ? people++ : null" :disabled="people === 10"
           data-input-counter-increment="quantity-input"
