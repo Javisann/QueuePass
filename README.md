@@ -13,16 +13,17 @@ Este proyecto esta enfocado a la creacion de una aplicacion web que permite a lo
 La aplicación, QueuePass, es una solución innovadora diseñada para mejorar la eficiencia en la gestión de colas en establecimientos. Permite a los clientes reservar su lugar virtual en la cola desde sus dispositivos móviles, evitando así las largas esperas en la entrada del restaurante. Además de gestionar las colas, la aplicación ofrece a los usuarios la posibilidad de explorar el menú y las promociones disponibles en el restaurante antes de su llegada, lo que contribuye a una experiencia más conveniente y personalizada.
 ## Architecture
 
-![Imgur](https://i.imgur.com/YgStvxv.jpeg)
+![Imgur](https://imgur.com/868WYrN.png)
 
 ## Technologies
 
 - Java
 - Spring Boot
+- Spring Security
 - MySQL
-- HTML
-- CSS
-- JavaScript
+- Nuxt.js
+- Vue
+  
 ## Features
 
 - Gestión de Colas Virtuales: Los clientes pueden unirse a la cola virtual desde cualquier lugar antes de llegar al restaurante.
@@ -38,8 +39,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendi
 
 - [@Javisann](https://github.com/Javisann)
 
-
-## License
-
-[Prueba](https://)
 
