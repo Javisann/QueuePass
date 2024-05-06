@@ -1,4 +1,4 @@
-package com.queuepass.apirest.service;
+package com.queuepass.apirest.service.storage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -12,13 +12,15 @@ public interface StorageService {
 
     void init();
 
-    void store(MultipartFile file);
+    String store(MultipartFile file);
 
     Stream<Path> loadAll();
 
     Path load(String filename);
 
     Resource loadAsResource(String filename);
+
+    boolean existsResource(String filename);
 
     void deleteAll();
 }

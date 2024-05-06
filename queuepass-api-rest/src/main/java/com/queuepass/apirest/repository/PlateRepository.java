@@ -1,15 +1,15 @@
 package com.queuepass.apirest.repository;
 
-import com.queuepass.apirest.model.Plate;
+import com.queuepass.apirest.model.PlateModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public interface PlateRepository extends JpaRepository<Plate, Long> {
+public interface PlateRepository extends JpaRepository<PlateModel, Long> {
 
-    public ArrayList<Plate> findByType(String type);
+    public ArrayList<PlateModel> findByType(String type);
 
-    public Optional<Plate> findByName(String name);
+    public Optional<PlateModel> findByName(String name);
 
 }

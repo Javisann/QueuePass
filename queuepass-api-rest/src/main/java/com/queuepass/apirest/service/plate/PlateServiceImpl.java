@@ -1,6 +1,6 @@
-package com.queuepass.apirest.service;
+package com.queuepass.apirest.service.plate;
 
-import com.queuepass.apirest.model.Plate;
+import com.queuepass.apirest.model.PlateModel;
 import com.queuepass.apirest.repository.PlateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,22 +15,22 @@ public class PlateServiceImpl implements PlateService{
     PlateRepository plateRepository;
 
     @Override
-    public Optional<Plate> findById(Long id) {
+    public Optional<PlateModel> findById(Long id) {
         return this.plateRepository.findById(id);
     }
 
     @Override
-    public ArrayList<Plate> findByType(String type) {
+    public ArrayList<PlateModel> findByType(String type) {
         return plateRepository.findByType(type);
     }
 
     @Override
-    public Optional<Plate> findByName(String name) {
+    public Optional<PlateModel> findByName(String name) {
         return plateRepository.findByName(name);
     }
 
     @Override
-    public Plate save(Plate plate) {
+    public PlateModel save(PlateModel plate) {
         return this.plateRepository.save(plate);
     }
 
