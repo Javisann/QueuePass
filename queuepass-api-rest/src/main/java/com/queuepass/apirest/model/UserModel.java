@@ -36,6 +36,9 @@ public class UserModel {
     @Column(name = "credential_no_expired")
     private Boolean credentialNoExpired;
 
+    @Column(name = "in_queue")
+    private boolean inQueue;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleModel> roles = new HashSet<>();

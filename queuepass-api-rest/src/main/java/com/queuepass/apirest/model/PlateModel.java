@@ -25,4 +25,6 @@ public class PlateModel {
 
     private String description;
 
+    private String image;
+
 }

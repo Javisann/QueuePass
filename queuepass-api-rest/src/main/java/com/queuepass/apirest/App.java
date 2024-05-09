@@ -1,11 +1,14 @@
 package com.queuepass.apirest;
 
-import com.queuepass.apirest.model.security.PermissionModel;
-import com.queuepass.apirest.model.security.RoleEnum;
-import com.queuepass.apirest.model.security.RoleModel;
+import com.queuepass.apirest.controller.CompanyController;
+import com.queuepass.apirest.model.CompanyModel;
 import com.queuepass.apirest.model.UserModel;
-import com.queuepass.apirest.repository.UserRepository;
+import com.queuepass.apirest.model.security.PermissionModel;
+import com.queuepass.apirest.model.security.RoleModel;
+import com.queuepass.apirest.repository.CompanyRepository;
 import com.queuepass.apirest.service.storage.StorageService;
+import com.queuepass.apirest.model.security.RoleEnum;
+import com.queuepass.apirest.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,11 +26,21 @@ public class App {
 	}
 
 	@Bean
-	CommandLineRunner init(UserRepository userRepository, StorageService storageService){
+	CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository){
 		return args -> {
 
 			storageService.deleteAll();
 			storageService.init();
+
+			CompanyModel createCompany = CompanyModel.builder()
+					.name("VIPS")
+					.contactEmail("prueba@gmail.com")
+					.location("Getafe")
+					.phoneNumber("666666666")
+					.id(1L)
+					.build();
+			companyRepository.save(createCompany);
+
 
 			//CREATE PERMISSIONS
 			PermissionModel createPermission = PermissionModel.builder()

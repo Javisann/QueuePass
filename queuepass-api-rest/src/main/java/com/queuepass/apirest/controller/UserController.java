@@ -1,6 +1,6 @@
 package com.queuepass.apirest.controller;
 
-import com.queuepass.apirest.DTO.UserDTO;
+import com.queuepass.apirest.controller.DTO.UserDTO;
 import com.queuepass.apirest.error.UserNotFoudException;
 import com.queuepass.apirest.model.UserModel;
 import com.queuepass.apirest.service.user.UserServiceImpl;

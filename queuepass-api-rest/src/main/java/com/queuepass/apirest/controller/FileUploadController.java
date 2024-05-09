@@ -1,7 +1,7 @@
 package com.queuepass.apirest.controller;
 
-import com.queuepass.apirest.error.storage.StorageFileNotFoundException;
 import com.queuepass.apirest.service.storage.StorageService;
+import com.queuepass.apirest.error.storage.StorageFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

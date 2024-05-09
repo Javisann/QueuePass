@@ -38,9 +38,7 @@ public class FileSystemStorageService implements StorageService {
 
             String originalFilename = file.getOriginalFilename();
 
-            String filenameWithoutSpaces = originalFilename != null ? originalFilename.replaceAll("\\s+", "_") : null;
-
-            String filename = filenameWithoutSpaces;
+            String filename = originalFilename != null ? originalFilename.replaceAll("\\s+", "_") : null;
 
             int number = 0;
             String extension = "";

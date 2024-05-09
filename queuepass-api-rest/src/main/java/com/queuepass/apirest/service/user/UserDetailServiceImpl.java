@@ -22,23 +22,23 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserModel userEntity = userRepository.findByEmail(username)
+        UserModel userModel = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado."));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-        userEntity.getRoles()
+        userModel.getRoles()
                 .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
-        userEntity.getRoles().stream()
+        userModel.getRoles().stream()
                 .flatMap(role -> role.getPermissionList().stream())
                 .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getName())));
 
 
-        return new User(userEntity.getEmail(),
-                userEntity.getPassword(),
-                userEntity.getIsEnabled(),
-                userEntity.getAccountNoExpired(),
-                userEntity.getAccountNoLocked(),
-                userEntity.getCredentialNoExpired(),
+        return new User(userModel.getEmail(),
+                userModel.getPassword(),
+                userModel.getIsEnabled(),
+                userModel.getAccountNoExpired(),
+                userModel.getAccountNoLocked(),
+                userModel.getCredentialNoExpired(),
                 authorityList);
     }
 }
