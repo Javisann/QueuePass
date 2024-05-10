@@ -2,10 +2,12 @@ package com.queuepass.apirest;
 
 import com.queuepass.apirest.controller.CompanyController;
 import com.queuepass.apirest.model.CompanyModel;
+import com.queuepass.apirest.model.PlateModel;
 import com.queuepass.apirest.model.UserModel;
 import com.queuepass.apirest.model.security.PermissionModel;
 import com.queuepass.apirest.model.security.RoleModel;
 import com.queuepass.apirest.repository.CompanyRepository;
+import com.queuepass.apirest.repository.PlateRepository;
 import com.queuepass.apirest.service.storage.StorageService;
 import com.queuepass.apirest.model.security.RoleEnum;
 import com.queuepass.apirest.repository.UserRepository;
@@ -26,7 +28,7 @@ public class App {
 	}
 
 	@Bean
-	CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository){
+	CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository, PlateRepository plateRepository){
 		return args -> {
 
 			storageService.deleteAll();
@@ -40,6 +42,14 @@ public class App {
 					.id(1L)
 					.build();
 			companyRepository.save(createCompany);
+
+			PlateModel createPlate = PlateModel.builder()
+					.name("Benedict")
+					.type("Hamburguesa")
+					.price(12.00)
+					.description("Locura")
+					.build();
+			plateRepository.save(createPlate);
 
 
 			//CREATE PERMISSIONS
@@ -67,7 +77,7 @@ public class App {
 					.build();
 			//CREATE USERS
 			UserModel userJavier = UserModel.builder()
-					.email("Javier@gmail.com")
+					.username("Javier@gmail.com")
 					.password(new BCryptPasswordEncoder().encode("1234"))
 					.isEnabled(true)
 					.accountNoExpired(true)
@@ -76,7 +86,7 @@ public class App {
 					.roles(Set.of(roleAdmin))
 					.build();
 			UserModel userAlvaro = UserModel.builder()
-					.email("Alvaro@gmail.com")
+					.username("Alvaro@gmail.com")
 					.password(new BCryptPasswordEncoder().encode("1234"))
 					.isEnabled(true)
 					.accountNoExpired(true)

@@ -21,18 +21,18 @@ public class UserServiceImpl implements UserService{
 
 
         return this.repository.findAll().stream()
-                .map(user -> new UserDTO(user.getId(), user.getEmail()))
+                .map(user -> new UserDTO(user.getId(), user.getUsername()))
                 .toList();
     }
 
     @Override
     public Optional<UserDTO> findById(Long id) {
-        return this.repository.findById(id).map(user -> new UserDTO(user.getId(), user.getEmail()));
+        return this.repository.findById(id).map(user -> new UserDTO(user.getId(), user.getUsername()));
     }
 
     @Override
-    public Optional<UserDTO> findByEmail(String email) {
-        return this.repository.findByEmail(email).map(user -> new UserDTO(user.getId(), user.getEmail()));
+    public Optional<UserDTO> findByUsername(String email) {
+        return this.repository.findByUsername(email).map(user -> new UserDTO(user.getId(), user.getUsername()));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return this.repository.existsByEmail(email);
+    public boolean existsByUsername(String email) {
+        return this.repository.existsByUsername(email);
     }
 }

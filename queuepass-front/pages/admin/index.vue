@@ -1,3 +1,10 @@
 <template>
-    <h1>Admin</h1>
+        <h1 >Admiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan</h1>
 </template>
+
+<script>
+
+definePageMeta({
+    layout:"admin-layout"
+})
+</script>

@@ -39,12 +39,12 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/username/{username}")
     public UserDTO findByUsername(@PathVariable String username){
-        return this.userService.findByEmail(username)
+        return this.userService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoudException(username));
     }
 
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    /*@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @PostMapping
     public ResponseEntity<String> create(@RequestBody UserModel user){
         if(user.getId() == null){
@@ -55,14 +55,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body("User created");
         }
         return ResponseEntity.badRequest().build();
-    }
+    }*/
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @PutMapping
     public ResponseEntity<String> update(@RequestBody UserModel user){
         UserDTO userComparator = this.userService.findById(user.getId()).orElseGet(null);
         if(userComparator.id() != null){
-            if(!user.getEmail().equals(userComparator.email()) && this.userService.existsByEmail(user.getEmail())){
+            if(!user.getUsername().equals(userComparator.username()) && this.userService.existsByUsername(user.getUsername())){
                 return ResponseEntity.badRequest().body("Username not available");
             }
             this.userService.save(user);
