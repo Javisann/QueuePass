@@ -19,6 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/plate")
 @PreAuthorize("denyAll()")
+@CrossOrigin
 public class PlateController {
 
     @Autowired

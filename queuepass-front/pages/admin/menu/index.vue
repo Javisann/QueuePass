@@ -1,0 +1,303 @@
+<template>
+  <div class="p-10 flex-1">
+    <form class="max-w-sm mx-auto">
+      <label for="tipos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona un tipo</label>
+      <select id="tipos"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        v-model="selectedType" @change="fetchData">
+        <option value="" disabled selected>Selecciona un tipo</option>
+        <option value="hamburguesa">Hamburguesas</option>
+        <option value="entrante">Entrantes</option>
+        <option value="ensalada">Ensaladas</option>
+        <option value="sandwich">Sanwiches</option>
+        <option value="postre">Postres</option>
+        <option value="bebida">Bebidas</option>
+      </select>
+    </form>
+    <div v-if="loading">Cargando...</div>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nombre</th>
+            <th scope="col" class="px-6 py-3">Tipo</th>
+            <th scope="col" class="px-6 py-3">Descripción</th>
+            <th scope="col" class="px-6 py-3">Precio</th>
+            <th scope="col" class="px-6 py-3">Imagen</th>
+            <th scope="col" class="px-6 py-3">
+              <span>Acciones</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in data" :key="item.id"
+            lass="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{ item.name }}
+            </th>
+            <td class="px-6 py-4">{{ item.type }}</td>
+            <td class="px-6 py-4">{{ item.description }}</td>
+            <td class="px-6 py-4">{{ item.price }}</td>
+            <td class="px-6 py-4">{{ item.image }}</td>
+            <td class="px-6 py-4">
+              <button @click="openPopupUpdate(item)" type="button"
+                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                Editar
+              </button>
+              <!-- EL boton llama al metodo y se le pasa el parametro ID para pasarselo al endopoin DELETE-->
+              <button @click="openPopupDelete(item.id)" type="button"
+                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CENTER PARA MODAL DELETE-->
+  <center v-if="showPopupDelete" class="absolute h-full w-full bg-black bg-opacity-20 flex items-center justify-center">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+        <button @click="closePopup" type="button"
+          class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="popup-modal">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+        <div class="p-4 md:p-5 text-center">
+          <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            ¿Quieres borrar este plato?
+          </h3>
+          <button @click="
+            deleteData();
+          closePopup();
+          " type="button"
+            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+            Si, estoy seguro
+          </button>
+          <button @click="closePopup" type="button"
+            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            No, cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </center>
+
+  <!-- CENTER PARA MODAL UPDATE-->
+  <center v-if="showPopupUpdate" class="absolute h-full w-full bg-black bg-opacity-20 flex items-center justify-center">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Actualizar plato
+          </h3>
+          <button @click="closePopup()" type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="crud-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form class="p-4 md:p-5" enctype="multipart/form-data">
+          <!-- para poder añadir imagenes, mandando la peticion multiparte-->
+          <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="col-span-2">
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+              <input v-model="selectedItem.name" type="text" name="name" id="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Nombre del plato" required="true" />
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio</label>
+              <input v-model="selectedItem.price" type="number" name="price" id="price"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="$12,99" required="true" />
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
+              <select v-model="selectedItem.type" id="category"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required="true">
+                <option value="" disabled selected>Selecciona un tipo</option>
+                <option value="Hamburguesa">Hamburguesas</option>
+                <option value="Entrante">Entrantes</option>
+                <option value="Ensalada">Ensaladas</option>
+                <option value="Sandwich">Sanwiches</option>
+                <option value="Postre">Postres</option>
+                <option value="Bebida">Bebidas</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción
+                del plato</label>
+              <textarea v-model="selectedItem.description" id="description" rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Escribe la descripción aqui" required="true"></textarea>
+            </div>
+          </div>
+          <button @click="
+            updateData();
+          closePopup();
+          " type="submit"
+            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 me-1 -ms-1 w-4 h-4" viewBox="0 0 20 20">
+              <path fill="currentColor" d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z" />
+            </svg>
+            Actualizar plato
+          </button>
+          <input name="imagen" type="file" ref="fileInput" />
+        </form>
+      </div>
+    </div>
+  </center>
+</template>
+
+<script>
+import { ref } from "vue";
+import axios from "axios";
+
+definePageMeta({
+  layout: "admin-layout",
+});
+export default {
+  setup() {
+    const showPopupDelete = ref(false);
+    const showPopupUpdate = ref(false);
+    const selectedType = ref("");
+    const data = ref(null);
+    const loading = ref(false);
+    const selectedId = ref(0);
+    const selectedItem = ref(null);
+
+    //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1NTQxMTc3LCJleHAiOjE3MTU1NDI5NzcsImp0aSI6ImU1ZWYzNjgxLWY3YmQtNGYwZi1hMTMwLWRkYTEwMDM4ZTY5ZiIsIm5iZiI6MTcxNTU0MTE3N30.WZ_r4ufEiT0CVN-dwXH7qox3CeGGA9GE1_FQdgUQCYs";
+
+    const fileInput = ref(null); // Variable reactiva para el input de archivo
+
+    const openPopupDelete = (id) => {
+      showPopupDelete.value = true;
+      selectedId.value = id;
+    };
+    const openPopupUpdate = (item) => {
+      selectedItem.value = item;
+      showPopupUpdate.value = true;
+    };
+
+    const closePopup = () => {
+      showPopupDelete.value = false;
+      showPopupUpdate.value = false;
+      selectedId.value = null;
+    };
+
+    // Llamada a la API para mostrar los platos por tipo
+    const fetchData = async () => {
+      if (selectedType.value) {
+        loading.value = true;
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/api/plate/type/${selectedType.value}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          data.value = response.data;
+        } catch (error) {
+          data.value = null;
+          console.error("Error fetching data:", error);
+        } finally {
+          loading.value = false;
+        }
+      }
+    };
+
+    //Llamada a la API para borrar un plato
+    const deleteData = async () => {
+      try {
+        const id = new Number(selectedId.value);
+
+        const response = await axios.delete(
+          `http://localhost:8080/api/plate/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        data.value = response.data;
+      } catch (error) {
+        data.value = null;
+        console.error("Error fetching data:", error);
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    //Llamada a la API para actualizar un plato
+    const updateData = async () => {
+
+      console.log(fileInput.value.files[0]);
+      try {
+        const formData = new FormData();
+        formData.append("new", selectedItem.value);
+        //if (fileInput.value) {
+          //formData.append("file", fileInput.value.files[0]); // Adjunta el archivo de imagen que se ha subido
+        //}
+
+        console.log(formData);
+
+        const response = await axios.put(
+          `http://localhost:8080/api/plate`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        data.value = response.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    return {
+      selectedType,
+      data,
+      loading,
+      fetchData,
+      showPopupDelete,
+      showPopupUpdate,
+      openPopupDelete,
+      openPopupUpdate,
+      closePopup,
+      deleteData,
+      selectedItem,
+      updateData,
+      fileInput, // Devolvemos la variable reactiva fileInput
+    };
+  },
+};
+
+</script>

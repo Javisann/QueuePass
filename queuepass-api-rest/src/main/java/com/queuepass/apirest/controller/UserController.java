@@ -43,20 +43,6 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoudException(username));
     }
 
-
-    /*@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    @PostMapping
-    public ResponseEntity<String> create(@RequestBody UserModel user){
-        if(user.getId() == null){
-            if(this.userService.existsByEmail(user.getEmail())) {
-                return ResponseEntity.badRequest().body("Username not available");
-            }
-            this.userService.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User created");
-        }
-        return ResponseEntity.badRequest().build();
-    }*/
-
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @PutMapping
     public ResponseEntity<String> update(@RequestBody UserModel user){
