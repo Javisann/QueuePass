@@ -21,7 +21,6 @@ public class AuthenticationController {
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
-    @PreAuthorize("permitAll()")
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest){
         return new ResponseEntity<>(this.userDetailService.loginUser(userRequest), HttpStatus.OK);

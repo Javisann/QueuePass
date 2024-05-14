@@ -2,7 +2,6 @@ package com.queuepass.apirest.service.user;
 
 import com.queuepass.apirest.controller.DTO.UserDTO;
 import com.queuepass.apirest.model.UserModel;
-import com.queuepass.apirest.model.security.RoleModel;
 import com.queuepass.apirest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

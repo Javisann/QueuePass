@@ -1,13 +1,14 @@
 package com.queuepass.apirest;
 
-import com.queuepass.apirest.controller.CompanyController;
 import com.queuepass.apirest.model.CompanyModel;
 import com.queuepass.apirest.model.PlateModel;
+import com.queuepass.apirest.model.QueueModel;
 import com.queuepass.apirest.model.UserModel;
 import com.queuepass.apirest.model.security.PermissionModel;
 import com.queuepass.apirest.model.security.RoleModel;
 import com.queuepass.apirest.repository.CompanyRepository;
 import com.queuepass.apirest.repository.PlateRepository;
+import com.queuepass.apirest.repository.QueueRepository;
 import com.queuepass.apirest.service.storage.StorageService;
 import com.queuepass.apirest.model.security.RoleEnum;
 import com.queuepass.apirest.repository.UserRepository;
@@ -17,6 +18,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -28,30 +31,10 @@ public class App {
 	}
 
 	@Bean
-	CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository, PlateRepository plateRepository){
+	CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository, PlateRepository plateRepository, QueueRepository queueRepository){
 		return args -> {
 
-			storageService.deleteAll();
-			storageService.init();
-
-			CompanyModel createCompany = CompanyModel.builder()
-					.name("VIPS")
-					.contactEmail("prueba@gmail.com")
-					.location("Getafe")
-					.phoneNumber("666666666")
-					.id(1L)
-					.build();
-			companyRepository.save(createCompany);
-
-			PlateModel createPlate = PlateModel.builder()
-					.name("Benedict")
-					.type("Hamburguesa")
-					.price(12.00)
-					.description("Locura")
-					.build();
-			plateRepository.save(createPlate);
-
-
+			/*
 			//CREATE PERMISSIONS
 			PermissionModel createPermission = PermissionModel.builder()
 					.name("CREATE")
@@ -94,8 +77,35 @@ public class App {
 					.credentialNoExpired(true)
 					.roles(Set.of(roleUser))
 					.build();
+			UserModel userDavid = UserModel.builder()
+					.username("David@gmail.com")
+					.password(new BCryptPasswordEncoder().encode("1234"))
+					.isEnabled(true)
+					.accountNoExpired(true)
+					.accountNoLocked(true)
+					.credentialNoExpired(true)
+					.roles(Set.of(roleUser))
+					.build();
+			UserModel userDaniel = UserModel.builder()
+					.username("Daniel@gmail.com")
+					.password(new BCryptPasswordEncoder().encode("4321"))
+					.isEnabled(true)
+					.accountNoExpired(true)
+					.accountNoLocked(true)
+					.credentialNoExpired(true)
+					.roles(Set.of(roleUser))
+					.build();
 
-			userRepository.saveAll(List.of(userJavier, userAlvaro));
+			userRepository.saveAll(List.of(userJavier, userAlvaro, userDavid, userDaniel));*/
 		};
+	}
+
+	public String fecha()
+	{
+		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+		long miliseconds = System.currentTimeMillis();
+		java.sql.Date date = new Date(miliseconds);
+		String dateFormateada = formato.format(date);
+		return dateFormateada;
 	}
 }

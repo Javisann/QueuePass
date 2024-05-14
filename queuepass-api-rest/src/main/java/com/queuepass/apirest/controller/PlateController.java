@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/plate")
-@PreAuthorize("denyAll()")
 @CrossOrigin
 public class PlateController {
 
@@ -28,7 +27,7 @@ public class PlateController {
     @Autowired
     StorageService storageService;
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/type/{type}")
     public ResponseEntity<ArrayList<PlateModel>> findByType(@PathVariable String type) {
         ArrayList<PlateModel> plates = this.plateService.findByType(type);

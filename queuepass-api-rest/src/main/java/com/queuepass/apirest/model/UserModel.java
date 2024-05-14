@@ -3,6 +3,7 @@ package com.queuepass.apirest.model;
 import com.queuepass.apirest.model.security.RoleModel;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashSet;
 import java.util.Set;

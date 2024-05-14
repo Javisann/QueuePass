@@ -18,7 +18,6 @@ public class PlateModel {
 
     private String type;
 
-    @Column(unique = true)
     private String name;
 
     private Double price;

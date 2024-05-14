@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@PreAuthorize("hasRole('ADMIN')")
+@CrossOrigin
 public class FileUploadController {
 
     private final StorageService storageService;
@@ -48,7 +48,7 @@ public class FileUploadController {
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                "inline; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

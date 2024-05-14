@@ -17,7 +17,7 @@
     <div v-if="loading">Cargando...</div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="px-6 py-3">Nombre</th>
@@ -38,8 +38,8 @@
             </th>
             <td class="px-6 py-4">{{ item.type }}</td>
             <td class="px-6 py-4">{{ item.description }}</td>
-            <td class="px-6 py-4">{{ item.price }}</td>
-            <td class="px-6 py-4">{{ item.image }}</td>
+            <td class="px-6 py-4">{{ item.price }}€</td>
+            <td class="px-6 py-4"><img :src="item.image" style="width: 200px !important;" /></td>
             <td class="px-6 py-4">
               <button @click="openPopupUpdate(item)" type="button"
                 class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
@@ -55,6 +55,11 @@
         </tbody>
       </table>
     </div>
+    <center>
+      <button @click="openPopupCreate()" type="button"
+        class="mt-10 max-w-40 text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Añadir
+        Plato</button>
+    </center>
   </div>
 
   <!-- CENTER PARA MODAL DELETE-->
@@ -138,7 +143,7 @@
                 <option value="Hamburguesa">Hamburguesas</option>
                 <option value="Entrante">Entrantes</option>
                 <option value="Ensalada">Ensaladas</option>
-                <option value="Sandwich">Sanwiches</option>
+                <option value="Sandwich">Sandwiches</option>
                 <option value="Postre">Postres</option>
                 <option value="Bebida">Bebidas</option>
               </select>
@@ -149,6 +154,11 @@
               <textarea v-model="selectedItem.description" id="description" rows="4"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Escribe la descripción aqui" required="true"></textarea>
+            </div>
+            <div class="col-span-2">
+              <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen
+                del plato</label>
+              <input name="imagen" type="file" ref="fileInput" />
             </div>
           </div>
           <button @click="
@@ -161,7 +171,81 @@
             </svg>
             Actualizar plato
           </button>
-          <input name="imagen" type="file" ref="fileInput" />
+        </form>
+      </div>
+    </div>
+  </center>
+
+  <!-- CENTER PARA MODAL CREATE-->
+  <center v-if="showPopupCreate" class="absolute h-full w-full bg-black bg-opacity-20 flex items-center justify-center">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Crear plato
+          </h3>
+          <button @click="closePopup()" type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="crud-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form class="p-4 md:p-5" enctype="multipart/form-data">
+          <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="col-span-2">
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+              <input v-model="newItem.name" type="text" name="name" id="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Nombre del plato" required="true" />
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio</label>
+              <input v-model="newItem.price" type="number" name="price" id="price"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="$12,99" required="true" />
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
+              <select v-model="newItem.type" id="category"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required="true">
+                <option value="" disabled selected>Selecciona un tipo</option>
+                <option value="Hamburguesa">Hamburguesas</option>
+                <option value="Entrante">Entrantes</option>
+                <option value="Ensalada">Ensaladas</option>
+                <option value="Sandwich">Sandwiches</option>
+                <option value="Postre">Postres</option>
+                <option value="Bebida">Bebidas</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción
+                del plato</label>
+              <textarea v-model="newItem.description" id="description" rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Escribe la descripción aqui" required="true"></textarea>
+            </div>
+            <div class="col-span-2">
+              <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen
+                del plato</label>
+              <input name="imagen" type="file" ref="fileInput" />
+            </div>
+          </div>
+          <button @click="
+            postData();
+          closePopup();
+          " type="submit"
+            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 me-1 -ms-1 w-4 h-4" viewBox="0 0 20 20">
+              <path fill="currentColor" d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z" />
+            </svg>
+            Crear plato
+          </button>
         </form>
       </div>
     </div>
@@ -179,15 +263,23 @@ export default {
   setup() {
     const showPopupDelete = ref(false);
     const showPopupUpdate = ref(false);
+    const showPopupCreate = ref(false);
     const selectedType = ref("");
     const data = ref(null);
     const loading = ref(false);
     const selectedId = ref(0);
-    const selectedItem = ref(null);
+    const selectedItem = ref();
+    const newItem = ref({
+      name: "",
+      price: 0,
+      type: "",
+      description: "",
+      image: null
+    });
 
     //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1NTQxMTc3LCJleHAiOjE3MTU1NDI5NzcsImp0aSI6ImU1ZWYzNjgxLWY3YmQtNGYwZi1hMTMwLWRkYTEwMDM4ZTY5ZiIsIm5iZiI6MTcxNTU0MTE3N30.WZ_r4ufEiT0CVN-dwXH7qox3CeGGA9GE1_FQdgUQCYs";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1Njc4MzYzLCJleHAiOjE3MTU2ODAxNjMsImp0aSI6IjhhNDQ5ZTUwLWVlM2MtNGUwOS1hOGY4LTgwMDMyM2FmOWEyZCIsIm5iZiI6MTcxNTY3ODM2M30.n_aLWCAFOwJxmbk0evfOcOwszeQO-MIoVSynr8Cgpss";
 
     const fileInput = ref(null); // Variable reactiva para el input de archivo
 
@@ -200,9 +292,21 @@ export default {
       showPopupUpdate.value = true;
     };
 
+    const openPopupCreate = () => {
+      showPopupCreate.value = true;
+      newItem.value = { //Para que cuando le des a añadir no se guarden los datos anteriores
+        name: "",
+        price: 0,
+        type: "",
+        description: "",
+        image: null
+      };
+    };
+
     const closePopup = () => {
       showPopupDelete.value = false;
       showPopupUpdate.value = false;
+      showPopupCreate.value = false;
       selectedId.value = null;
     };
 
@@ -234,7 +338,7 @@ export default {
       try {
         const id = new Number(selectedId.value);
 
-        const response = await axios.delete(
+        await axios.delete(
           `http://localhost:8080/api/plate/${id}`,
           {
             headers: {
@@ -242,29 +346,28 @@ export default {
             },
           }
         );
-        data.value = response.data;
+        data.value = null;
       } catch (error) {
         data.value = null;
         console.error("Error fetching data:", error);
       } finally {
         loading.value = false;
+        fetchData();
       }
     };
 
     //Llamada a la API para actualizar un plato
     const updateData = async () => {
 
-      console.log(fileInput.value.files[0]);
       try {
         const formData = new FormData();
-        formData.append("new", selectedItem.value);
-        //if (fileInput.value) {
-          //formData.append("file", fileInput.value.files[0]); // Adjunta el archivo de imagen que se ha subido
-        //}
+        formData.append("new", new Blob([JSON.stringify(selectedItem.value)], { type: "application/json" }));
 
-        console.log(formData);
+        if (fileInput.value) {
+          formData.append("file", fileInput.value.files[0]); // Adjunta el archivo de imagen que se ha subido
+        }
 
-        const response = await axios.put(
+        await axios.put(
           `http://localhost:8080/api/plate`,
           formData,
           {
@@ -274,13 +377,40 @@ export default {
             },
           }
         );
-        data.value = response.data;
+        data.value = null;
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
         loading.value = false;
+        fetchData();
       }
     };
+
+    const postData = async () => {
+      try {
+        const formData = new FormData();
+        formData.append("new", new Blob([JSON.stringify(newItem.value)], { type: "application/json" }));
+        if (fileInput.value) {
+          formData.append("file", fileInput.value.files[0]); // Adjunta el archivo de imagen que se ha subido
+        }
+
+        await axios.post(
+          `http://localhost:8080/api/plate`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        data.value = null;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        fetchData();
+      }
+    }
 
     return {
       selectedType,
@@ -291,13 +421,16 @@ export default {
       showPopupUpdate,
       openPopupDelete,
       openPopupUpdate,
+      showPopupCreate,
+      openPopupCreate,
       closePopup,
       deleteData,
       selectedItem,
       updateData,
-      fileInput, // Devolvemos la variable reactiva fileInput
+      postData,
+      fileInput,
+      newItem
     };
   },
 };
-
 </script>
