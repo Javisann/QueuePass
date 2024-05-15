@@ -1,6 +1,11 @@
 <template>
   <div class="p-10 flex-1">
-    <form class="max-w-sm mx-auto">
+    <div class="border-b pb-4">
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                Menu del Restaurante
+            </h1>
+        </div>
+    <form class="mt-4 max-w-sm mx-auto">
       <label for="tipos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona un tipo</label>
       <select id="tipos"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -118,9 +123,7 @@
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <!-- Modal body -->
         <form class="p-4 md:p-5" enctype="multipart/form-data">
-          <!-- para poder añadir imagenes, mandando la peticion multiparte-->
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2">
               <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
@@ -279,7 +282,7 @@ export default {
 
     //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1Njc4MzYzLCJleHAiOjE3MTU2ODAxNjMsImp0aSI6IjhhNDQ5ZTUwLWVlM2MtNGUwOS1hOGY4LTgwMDMyM2FmOWEyZCIsIm5iZiI6MTcxNTY3ODM2M30.n_aLWCAFOwJxmbk0evfOcOwszeQO-MIoVSynr8Cgpss";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODA1NjYyLCJleHAiOjE3MTU4MDc0NjIsImp0aSI6IjMyZjczY2NlLTQ1OGMtNDExMy1iODVlLTA2YTc2OGZiODI5YiIsIm5iZiI6MTcxNTgwNTY2Mn0.rAhXTKQvYqehpv33GCRi8ANDa7U87xab6U8Py1mLqiw";
 
     const fileInput = ref(null); // Variable reactiva para el input de archivo
 
@@ -385,7 +388,7 @@ export default {
         fetchData();
       }
     };
-
+    //Llamada a la API para crear un plato
     const postData = async () => {
       try {
         const formData = new FormData();
