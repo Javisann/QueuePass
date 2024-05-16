@@ -1,9 +1,10 @@
 <template>
   <div class="p-10 flex-1">
-    <div class="border-b pb-4">
+    <div class="flex items-center justify-between border-b pb-4">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Menu del Restaurante
+                Cola actual
             </h1>
+            <img src="../../../assets/images/queue-pass-logo-fondo.png" alt="Imagen a la derecha" class="h-18 w-48 object-cover">
         </div>
     <form class="mt-4 max-w-sm mx-auto">
       <label for="tipos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona un tipo</label>
@@ -168,7 +169,7 @@
             updateData();
           closePopup();
           " type="submit"
-            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            class="text-white inline-flex items-center bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 me-1 -ms-1 w-4 h-4" viewBox="0 0 20 20">
               <path fill="currentColor" d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z" />
             </svg>
@@ -197,7 +198,6 @@
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <!-- Modal body -->
         <form class="p-4 md:p-5" enctype="multipart/form-data">
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2">
@@ -283,7 +283,7 @@ export default {
 
     //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODU2MDc2LCJleHAiOjE3MTU4NTc4NzYsImp0aSI6ImY2MWZmZjExLTc4ZmUtNDFiZS1hOWE4LWUyYzBlMzc1Yzk0NiIsIm5iZiI6MTcxNTg1NjA3Nn0.oRDppQFBEYR_r6VNLCPNJufY5HAxw0nWbCOtPOpX9Ik";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODYwOTUzLCJleHAiOjE3MTU4NjI3NTMsImp0aSI6ImNiODUzMDMyLWJkMWEtNDE0YS04NWZhLWNkYTdkNmI3MWViNiIsIm5iZiI6MTcxNTg2MDk1M30.eJ_F4qoS7JTs6bSaQQfkdDe8P9tuUWsmMqmMgCYc3uw";
 
     const fileInput = ref(null); // Variable reactiva para el input de archivo
 
@@ -355,7 +355,7 @@ export default {
         data.value = null;
       } catch (error) {
         data.value = null;
-        console.error("Error fetching data:", error);
+        console.error("Error deleting data:", error);
       } finally {
         loading.value = false;
         fetchData();
@@ -386,7 +386,7 @@ export default {
         );
         data.value = null;
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error updating data:", error);
       } finally {
         loading.value = false;
         fetchData();

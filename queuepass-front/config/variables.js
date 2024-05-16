@@ -1,3 +1,3 @@
-const BACK_URL = "https://9dd9-188-26-213-15.ngrok-free.app";
+const BACK_URL = "http://localhost:8080";
 
 export default BACK_URL;
