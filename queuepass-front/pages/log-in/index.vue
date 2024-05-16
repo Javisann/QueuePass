@@ -72,6 +72,7 @@
 
 <script>
 import axios from "axios";
+import BACK_URL from "../../config/variables.js"
 
 export default {
   setup() {
@@ -82,25 +83,25 @@ export default {
     //Llamada a la API para crear un plato
     const postData = async () => {
       try {
-        const response = await axios.post(`http://localhost:8080/auth/log-in`, {
+        console.log(BACK_URL);
+        const response = await axios.post(`${BACK_URL}/auth/log-in`, {
           username: username.value,
           password: password.value,
         });
         console.log(response.data);
 
-        // Extraer los nombres de los roles del array de objetos
+        // Sacar los nombres de los roles del array de objetos
         const userRoles = response.data.authorities.map(role => role.authority);
 
-        // Filtrar los roles que comienzan con "ROLE_"
+        // Filtrar los roles que comienzan por "ROLE_"
         const filteredRoles = userRoles.filter(role => role.startsWith('ROLE_'));
 
-        // Redirigir a la página correspondiente según los roles
+        // Redirigir a la página de admin
         if (filteredRoles.includes('ROLE_ADMIN')) {
-          // Redirigir a la página de administrador
-          window.location.href = '/admin'; // Cambia "/admin" por la ruta de tu página de administrador
+          window.location.href = '/admin';
         } else if (filteredRoles.includes('ROLE_USER')) {
-          // Redirigir a la página de usuario normal
-          window.location.href = '/user'; // Cambia "/user" por la ruta de tu página de usuario normal
+          // Redirigir a la página de usuario
+          window.location.href = '/user';
         }
       } catch (error) {
         alert.value = true;

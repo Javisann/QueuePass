@@ -258,6 +258,7 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
+import BACK_URL from "../../config/variables.js"
 
 definePageMeta({
   layout: "admin-layout",
@@ -282,7 +283,7 @@ export default {
 
     //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODA1NjYyLCJleHAiOjE3MTU4MDc0NjIsImp0aSI6IjMyZjczY2NlLTQ1OGMtNDExMy1iODVlLTA2YTc2OGZiODI5YiIsIm5iZiI6MTcxNTgwNTY2Mn0.rAhXTKQvYqehpv33GCRi8ANDa7U87xab6U8Py1mLqiw";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODU2MDc2LCJleHAiOjE3MTU4NTc4NzYsImp0aSI6ImY2MWZmZjExLTc4ZmUtNDFiZS1hOWE4LWUyYzBlMzc1Yzk0NiIsIm5iZiI6MTcxNTg1NjA3Nn0.oRDppQFBEYR_r6VNLCPNJufY5HAxw0nWbCOtPOpX9Ik";
 
     const fileInput = ref(null); // Variable reactiva para el input de archivo
 
@@ -319,9 +320,10 @@ export default {
         loading.value = true;
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/plate/type/${selectedType.value}`,
+            `${BACK_URL}/api/plate/type/${selectedType.value}`,
             {
               headers: {
+                "ngrok-skip-browser-warning": "69420",
                 Authorization: `Bearer ${token}`,
               },
             }
@@ -342,9 +344,10 @@ export default {
         const id = new Number(selectedId.value);
 
         await axios.delete(
-          `http://localhost:8080/api/plate/${id}`,
+          `${BACK_URL}/api/plate/${id}`,
           {
             headers: {
+              "ngrok-skip-browser-warning": "69420",
               Authorization: `Bearer ${token}`,
             },
           }
@@ -371,10 +374,11 @@ export default {
         }
 
         await axios.put(
-          `http://localhost:8080/api/plate`,
+          `${BACK_URL}/api/plate`,
           formData,
           {
             headers: {
+              "ngrok-skip-browser-warning": "69420",
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${token}`,
             },
@@ -398,10 +402,11 @@ export default {
         }
 
         await axios.post(
-          `http://localhost:8080/api/plate`,
+          `${BACK_URL}/api/plate`,
           formData,
           {
             headers: {
+              "ngrok-skip-browser-warning": "69420",
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${token}`,
             },
