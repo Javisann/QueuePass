@@ -3,8 +3,7 @@ package com.queuepass.apirest.controller.DTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
-public record AuthCreateUser(@NotBlank String username,
-                             @NotBlank String password,
-                             @Valid AuthCreateRoleRequest roleRequest) {
-
+public record AuthCreateUserRequest(@NotBlank String username,
+                                    @NotBlank String password
+                                    ) {
 }
