@@ -2,7 +2,7 @@
     <div class="p-10 flex-1">
         <div class="flex items-center justify-between border-b pb-4">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Cola actual
+                Configuración
             </h1>
             <img src="../../../assets/images/queue-pass-logo-fondo.png" alt="Imagen a la derecha"
                 class="h-18 w-48 object-cover">
@@ -98,8 +98,10 @@ export default {
         const fileInput = ref(null);
 
         //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
-        const token = localStorage.getItem("token");
-
+        let token = null;
+        if (typeof window !== "undefined") {
+            token = localStorage.getItem("token");
+        }
         const fetchData = async () => {
             try {
                 const response = await axios.get(

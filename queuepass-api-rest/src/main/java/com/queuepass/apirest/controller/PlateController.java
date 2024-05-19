@@ -27,7 +27,7 @@ public class PlateController {
     @Autowired
     StorageService storageService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/type/{type}")
     public ResponseEntity<ArrayList<PlateModel>> findByType(@PathVariable String type) {
         ArrayList<PlateModel> plates = this.plateService.findByType(type);
@@ -35,16 +35,6 @@ public class PlateController {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(plates);
-        }
-    }
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    @GetMapping("/name/{name}")
-    public ResponseEntity<PlateModel> findByName(@PathVariable String name) {
-        Optional<PlateModel> plate = this.plateService.findByName(name);
-        if (plate.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(plate.get());
         }
     }
 

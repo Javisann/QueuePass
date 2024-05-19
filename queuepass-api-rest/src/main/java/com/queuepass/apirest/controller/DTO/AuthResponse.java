@@ -10,6 +10,6 @@ public record AuthResponse(
         String username,
         String message,
         List<GrantedAuthority> authorities,
-        String token,
+        String token    ,
         Boolean status) {
 }

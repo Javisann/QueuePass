@@ -1,11 +1,12 @@
 <template>
   <div class="p-10 flex-1">
     <div class="flex items-center justify-between border-b pb-4">
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Cola actual
-            </h1>
-            <img src="../../../assets/images/queue-pass-logo-fondo.png" alt="Imagen a la derecha" class="h-18 w-48 object-cover">
-        </div>
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        Carta del restaurante
+      </h1>
+      <img src="../../../assets/images/queue-pass-logo-fondo.png" alt="Imagen a la derecha"
+        class="h-18 w-48 object-cover">
+    </div>
     <form class="mt-4 max-w-sm mx-auto">
       <label for="tipos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona un tipo</label>
       <select id="tipos"
@@ -15,52 +16,54 @@
         <option value="hamburguesa">Hamburguesas</option>
         <option value="entrante">Entrantes</option>
         <option value="ensalada">Ensaladas</option>
-        <option value="sandwich">Sanwiches</option>
+        <option value="sandwich">Sandwiches</option>
         <option value="postre">Postres</option>
         <option value="bebida">Bebidas</option>
       </select>
     </form>
     <div v-if="loading">Cargando...</div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">Nombre</th>
-            <th scope="col" class="px-6 py-3">Tipo</th>
-            <th scope="col" class="px-6 py-3">Descripción</th>
-            <th scope="col" class="px-6 py-3">Precio</th>
-            <th scope="col" class="px-6 py-3">Imagen</th>
-            <th scope="col" class="px-6 py-3">
-              <span>Acciones</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in data" :key="item.id"
-            lass="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{ item.name }}
-            </th>
-            <td class="px-6 py-4">{{ item.type }}</td>
-            <td class="px-6 py-4">{{ item.description }}</td>
-            <td class="px-6 py-4">{{ item.price }}€</td>
-            <td class="px-6 py-4"><img :src="item.image" style="width: 200px !important;" /></td>
-            <td class="px-6 py-4">
-              <button @click="openPopupUpdate(item)" type="button"
-                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                Editar
-              </button>
-              <!-- EL boton llama al metodo y se le pasa el parametro ID para pasarselo al endopoin DELETE-->
-              <button @click="openPopupDelete(item.id)" type="button"
-                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                Borrar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="relative shadow-md sm:rounded-lg mt-5">
+      <div class="table-container">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">Nombre</th>
+              <th scope="col" class="px-6 py-3">Tipo</th>
+              <th scope="col" class="px-6 py-3">Descripción</th>
+              <th scope="col" class="px-6 py-3">Precio</th>
+              <th scope="col" class="px-6 py-3">Imagen</th>
+              <th scope="col" class="px-6 py-3">
+                <span>Acciones</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in data" :key="item.id"
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ item.name }}
+              </th>
+              <td class="px-6 py-4">{{ item.type }}</td>
+              <td class="px-6 py-4">{{ item.description }}</td>
+              <td class="px-6 py-4">{{ item.price }}€</td>
+              <td class="px-6 py-4"><img :src="item.image" style="width: 150px !important;" /></td>
+              <td class="px-6 py-4">
+                <button @click="openPopupUpdate(item)" type="button"
+                  class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                  Editar
+                </button>
+                <button @click="openPopupDelete(item.id)" type="button"
+                  class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                  Borrar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
     <center>
       <button @click="openPopupCreate()" type="button"
         class="mt-10 max-w-40 text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Añadir
@@ -282,8 +285,11 @@ export default {
     });
 
     //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
-    const token = localStorage.getItem("token");
-    
+    let token = null;
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("token");
+    }
+
     const fileInput = ref(null); // Variable reactiva para el input de archivo
 
     const openPopupDelete = (id) => {
@@ -327,7 +333,45 @@ export default {
               },
             }
           );
-          data.value = response.data;
+          data.value = await Promise.all(response.data.map(async (item) => {
+            if (item.image != null) {
+              const urlParts = item.image.split("/").slice(3).join("/");
+              const imageUrl = `${BACK_URL}/${urlParts}`;
+
+              // Petición para obtener el contenido de la imagen
+              try {
+                const imageResponse = await axios.get(imageUrl, {
+                  headers: { "ngrok-skip-browser-warning": "69420" },
+                  responseType: 'arraybuffer' // Establece el tipo de respuesta como arraybuffer
+                });
+
+                // Convierte el array buffer a un blob
+                const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });
+
+                // Utiliza FileReader para leer el blob y obtener la URL de datos
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+
+                // Devuelve una promesa para esperar la finalización de la lectura del archivo
+                return new Promise((resolve) => {
+                  reader.onloadend = () => {
+                    const imageDataUrl = reader.result;
+                    item.image = imageDataUrl;
+                    resolve(item);
+                  };
+                });
+              } catch (e) {
+                console.error("Error fetching image:", e);
+                item.image = null;
+                return new Promise((resolve) => {
+                  resolve(item);
+                });
+              }
+            }
+            return new Promise((resolve) => {
+              resolve(item);
+            });
+          }));
         } catch (error) {
           data.value = null;
           console.error("Error fetching data:", error);
@@ -441,3 +485,37 @@ export default {
   },
 };
 </script>
+
+<style>
+.table-container {
+  max-height: 100%; /* Ajusta la altura según sea necesario */
+  overflow-y: auto;
+  position: relative;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+thead tr {
+  background: inherit; /* Mantiene el estilo de fondo del encabezado */
+}
+
+tbody {
+  display: block;
+  max-height: 55vh; /* Ajusta la altura según sea necesario */
+  overflow-y: auto;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.absolute{
+  z-index: 20;
+}
+</style>

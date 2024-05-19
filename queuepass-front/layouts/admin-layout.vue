@@ -6,15 +6,12 @@
 </template>
 
 <style>
-
 .sidebar{
-    position: relative;
+    position: sticky;
     z-index: 0;
 }
-
 .page{
     position: relative;
     z-index: 1;
 }
-
 </style>
