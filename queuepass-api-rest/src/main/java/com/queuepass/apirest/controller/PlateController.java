@@ -75,13 +75,9 @@ public class PlateController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> update(@RequestPart("new") PlateModel plate, @RequestPart MultipartFile file) {
+    public ResponseEntity<Object> update(@RequestPart("new") PlateModel plate, @RequestPart(required = false) MultipartFile file) {
         if(plate.getId() == null){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(HttpStatus.BAD_REQUEST, "To change properties to the plate, you must specify an ID"));
-        }
-
-        if(plateService.findByName(plate.getName()).isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiError(HttpStatus.CONFLICT, "The plate with name : '"+ plate.getName() + "' is already exists"));
         }
 
         String urlImage = null;

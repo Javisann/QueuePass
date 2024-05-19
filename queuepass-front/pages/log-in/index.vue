@@ -80,22 +80,21 @@ export default {
     const password = ref("");
     const alert = ref(false);
 
-    //Llamada a la API para crear un plato
+    //Llamada a la API para iniciar sesion
     const postData = async () => {
       try {
-        console.log(BACK_URL);
         const response = await axios.post(`${BACK_URL}/auth/log-in`, {
           username: username.value,
           password: password.value,
         });
-        console.log(response.data);
+
+        // Guardar el token en el localStorage
+        localStorage.setItem("token", response.data.token);
 
         // Sacar los nombres de los roles del array de objetos
         const userRoles = response.data.authorities.map(role => role.authority);
-
         // Filtrar los roles que comienzan por "ROLE_"
         const filteredRoles = userRoles.filter(role => role.startsWith('ROLE_'));
-
         // Redirigir a la página de admin
         if (filteredRoles.includes('ROLE_ADMIN')) {
           window.location.href = '/admin';

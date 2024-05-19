@@ -4,7 +4,7 @@
         <div class="grid h-full max-w-lg grid-cols-2 mx-auto font-medium">
             <NuxtLink to="/user/menu" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                active-class="active">
+                active-class="active bg-blue-200 hover:bg-blue-200 dark:hover:bg-blue-200">
                 <svg class="w-7 h-7 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
                     xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
                     <path fill="currentColor"
@@ -15,7 +15,7 @@
             </NuxtLink>
             <NuxtLink to="/user" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-                active-class="active">
+                active-class="active bg-blue-200 hover:bg-blue-100 dark:hover:bg-blue-100">
                 <svg class="w-6 h-6 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path
@@ -29,8 +29,7 @@
 </template>
 
 <style scoped>
-.active {
-    --tw-text-opacity: 1;
-    color: rgb(37 99 235 / var(--tw-text-opacity));
+.active > * {
+    color: rgb(0, 89, 255);
 }
 </style>

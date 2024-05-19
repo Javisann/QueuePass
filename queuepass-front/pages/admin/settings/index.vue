@@ -4,7 +4,8 @@
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Cola actual
             </h1>
-            <img src="../../../assets/images/queue-pass-logo-fondo.png" alt="Imagen a la derecha" class="h-18 w-48 object-cover">
+            <img src="../../../assets/images/queue-pass-logo-fondo.png" alt="Imagen a la derecha"
+                class="h-18 w-48 object-cover">
         </div>
         <center class="mt-6 mb-4">
             <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900">
@@ -60,7 +61,7 @@
                                 cargar</span> o arrastra y suelta</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG or JPG</p>
                     </div>
-                    <input id="dropzone-file" type="file" class="hidden" ref="fileInput"/>
+                    <input id="dropzone-file" type="file" class="hidden" ref="fileInput" />
                 </label>
             </div>
             <button @click="updateData()"
@@ -96,20 +97,18 @@ export default {
 
         const fileInput = ref(null);
 
-            //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODYwMTMzLCJleHAiOjE3MTU4NjE5MzMsImp0aSI6IjYyNDZhZjE1LWY3OTUtNDVjYS1hYTliLTUyODNiNjBiMjYwOCIsIm5iZiI6MTcxNTg2MDEzM30.SxgRORke9R1kyGIUnNc015odfulEMk-qB3XvwiMXXPY";
-
+        //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
+        const token = localStorage.getItem("token");
 
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `${BACK_URL}/api/company`, 
+                    `${BACK_URL}/api/company`,
                     {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
                 selectedItem.value = response.data;
             } catch (error) {
                 console.error("Error fetching company data:", error);
@@ -117,7 +116,7 @@ export default {
         };
 
         const updateData = async (event) => {
-    
+
             try {
                 const formData = new FormData();
                 formData.append("new", new Blob([JSON.stringify(selectedItem.value)], { type: "application/json" }));

@@ -282,9 +282,8 @@ export default {
     });
 
     //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVVRIMEpXVC1CQUNLRU5EIiwic3ViIjoiamF2aWVyQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiQ1JFQVRFLERFTEVURSxSRUFELFJPTEVfQURNSU4sVVBEQVRFIiwiaWF0IjoxNzE1ODYwOTUzLCJleHAiOjE3MTU4NjI3NTMsImp0aSI6ImNiODUzMDMyLWJkMWEtNDE0YS04NWZhLWNkYTdkNmI3MWViNiIsIm5iZiI6MTcxNTg2MDk1M30.eJ_F4qoS7JTs6bSaQQfkdDe8P9tuUWsmMqmMgCYc3uw";
-
+    const token = localStorage.getItem("token");
+    
     const fileInput = ref(null); // Variable reactiva para el input de archivo
 
     const openPopupDelete = (id) => {
