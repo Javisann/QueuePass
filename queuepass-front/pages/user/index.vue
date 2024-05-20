@@ -1,6 +1,6 @@
 <template>
   <div v-if="inQueue == false" class="flex flex-col justify-between items-center h-full">
-    <GeneralLogos></GeneralLogos>
+    <GeneralLogos></GeneralLogos> //llama al componente que contiene los Logos
     <div class="flex-1 w-full max-w-sm mx-auto mb-20 p-6">
       <div class="border-b mb-2">
         <h1 class="text-3xl font-bold text-center mb-4">¡Bienvenido!</h1>
@@ -46,7 +46,7 @@ function joinQueue(newPeople) {
 
 
 definePageMeta({
-    layout:"user"
+    layout:"user" // Le asignamos al layout que queremos usar
 })
 
 </script>

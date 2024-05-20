@@ -90,13 +90,14 @@ export default {
 
         // Guardar el token en el localStorage
         localStorage.setItem("token", response.data.token);
-
+        
         // Sacar los nombres de los roles del array de objetos
         const userRoles = response.data.authorities.map(role => role.authority);
-        // Filtrar los roles que comienzan por "ROLE_"
+        // Filtrar los roles que comienzan por "ROLE_" (Los roles siempre empiezan por ese prefijo)
         const filteredRoles = userRoles.filter(role => role.startsWith('ROLE_'));
-        // Redirigir a la página de admin
+
         if (filteredRoles.includes('ROLE_ADMIN')) {
+          // Redirigir a la página de admin 
           window.location.href = '/admin';
         } else if (filteredRoles.includes('ROLE_USER')) {
           // Redirigir a la página de usuario
@@ -116,3 +117,4 @@ export default {
   },
 };
 </script>
+

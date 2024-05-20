@@ -76,7 +76,6 @@
 </template>
 
 <script>
-
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import BACK_URL from "../../config/variables.js"
@@ -97,10 +96,10 @@ export default {
 
         const fileInput = ref(null);
 
-        //Le pasas el token del usuario regisstrado para pasarselo a la cabecera del request
+        //Le pasas el token del usuario registrado para pasarselo a la cabecera del request
         let token = null;
-        if (typeof window !== "undefined") {
-            token = localStorage.getItem("token");
+        if (typeof window !== "undefined") { // Para que cuando recargue la pagina se mantenga el token
+            token = localStorage.getItem("token"); // Obtiene el token del local storage
         }
         const fetchData = async () => {
             try {

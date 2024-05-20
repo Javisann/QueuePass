@@ -8,7 +8,6 @@
         class="h-18 w-48 object-cover">
     </div>
     <form class="mt-4 max-w-sm mx-auto">
-      <label for="tipos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona un tipo</label>
       <select id="tipos"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         v-model="selectedType" @change="fetchData">
@@ -488,7 +487,8 @@ export default {
 
 <style>
 .table-container {
-  max-height: 100%; /* Ajusta la altura según sea necesario */
+  max-height: 100%;
+  /* Ajusta la altura según sea necesario */
   overflow-y: auto;
   position: relative;
 }
@@ -500,22 +500,25 @@ thead {
 }
 
 thead tr {
-  background: inherit; /* Mantiene el estilo de fondo del encabezado */
+  background: inherit;
+  /* Mantiene el estilo de fondo del encabezado */
 }
 
 tbody {
   display: block;
-  max-height: 55vh; /* Ajusta la altura según sea necesario */
+  max-height: 55vh;
+  /* Ajusta la altura según sea necesario */
   overflow-y: auto;
 }
 
-thead, tbody tr {
+thead,
+tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
-.absolute{
+.absolute {
   z-index: 20;
 }
 </style>

@@ -10,8 +10,6 @@
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Regístrate
           </h1>
-
-
           <form class="max-w-sm mx-auto">
             <div class="mb-5">
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
@@ -56,7 +54,6 @@
           </form>
         </div>
       </div>
-
       <!--Alerta-->
       <div v-if="alert == true"
         class="mt-4 flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
@@ -71,7 +68,6 @@
           <span class="font-medium">Error!</span> Las contraseñas no coinciden.
         </div>
       </div>
-
     </div>
   </section>
 </template>
@@ -90,7 +86,7 @@ export default {
     //Llamada a la API para registrar un usuario
     const postData = async () => {
       try {
-        if (password.value !== secondPassword.value) {
+        if (password.value !== secondPassword.value) { //Si la contraseña1 no coincide con la contraseña2 sale una alerta
           alert.value = true;
           return;
         }
@@ -99,6 +95,9 @@ export default {
           username: username.value,
           password: password.value,
         });
+        //Guardamos en el localstorage el token
+        localStorage.setItem("token", response.data.token);
+
         //Redirigimos a la pagina usuario
         window.location.href = '/user';
       } catch (error) {
