@@ -19,16 +19,31 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+/**
+ * Clase que implementa la interfaz StorageService y proporciona métodos para almacenar y manipular archivos en el sistema
+ */
 @Service
 public class FileSystemStorageService implements StorageService {
 
-
+    /**
+     * Ubicación raíz donde se almacenarán los archivos.
+     */
     private final Path rootLocation;
 
+    /**
+     * Constructor de la clase FileSystemStorageService.
+     * @param dirname el nombre del directorio raíz donde se almacenarán los archivos.
+     */
     public FileSystemStorageService(@Value("${system.storage.dirname}") String dirname) {
         this.rootLocation = Path.of(dirname);
     }
 
+    /**
+     * Almacena el archivo en el sistema de archivos.
+     * @param file el archivo a almacenar.
+     * @return el nombre del archivo almacenado.
+     * @throws StorageException si ocurre un error al almacenar el archivo.
+     */
     @Override
     public String store(MultipartFile file) {
         try {
@@ -60,7 +75,6 @@ public class FileSystemStorageService implements StorageService {
             Path destinationFile = this.rootLocation.resolve(Paths.get(Objects.requireNonNull(filename))).normalize().toAbsolutePath();
 
             if (!destinationFile.startsWith(this.rootLocation.toAbsolutePath())) {
-                // This is a security check
                 throw new StorageException("Cannot store file outside current directory.");
             }
 
@@ -73,8 +87,11 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to store file.", e);
         }
     }
-
-
+    /**
+     * Carga todos los archivos almacenados en el sistema de archivos.
+     * @return un Stream de Paths que representa los archivos almacenados.
+     * @throws StorageException si ocurre un error al leer los archivos almacenados.
+     */
     @Override
     public Stream<Path> loadAll() {
         try {
@@ -84,14 +101,23 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }
-
     }
-
+    /**
+     * Carga un archivo específico del sistema de archivos.
+     * @param filename el nombre del archivo a cargar.
+     * @return el Path del archivo cargado.
+     */
     @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
     }
 
+    /**
+     * Carga un archivo como un recurso.
+     * @param filename el nombre del archivo a cargar.
+     * @return el recurso cargado.
+     * @throws StorageFileNotFoundException si el archivo no existe o no se puede leer.
+     */
     @Override
     public Resource loadAsResource(String filename) {
         try {
@@ -102,13 +128,17 @@ public class FileSystemStorageService implements StorageService {
             } else {
                 throw new StorageFileNotFoundException(
                         "Could not read file: " + filename);
-
             }
         } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
         }
     }
 
+    /**
+     * Verifica si un recurso existe en el sistema de archivos.
+     * @param filename el nombre del archivo a verificar.
+     * @return true si el archivo existe, false en caso contrario.
+     */
     public boolean existsResource(String filename) {
         try {
             Path file = rootLocation.resolve(filename);
@@ -118,11 +148,18 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+    /**
+     * Elimina todos los archivos almacenados en el sistema de archivos.
+     */
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
+    /**
+     * Inicializa el almacenamiento creando el directorio raíz si no existe.
+     * @throws StorageException si ocurre un error al inicializar el almacenamiento.
+     */
     @Override
     public void init() {
         try {
@@ -132,4 +169,3 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 }
-

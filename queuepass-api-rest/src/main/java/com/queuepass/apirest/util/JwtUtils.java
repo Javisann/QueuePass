@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Clase util para manejar JWT (JSON Web Tokens)
+ */
 @Component
 public class JwtUtils {
 
@@ -24,6 +27,12 @@ public class JwtUtils {
     @Value("${security.jwt.user.generator}")
     private String userGenerator;
 
+    /**
+     * Crea un token JWT a partir de la autenticación proporcionada.
+     *
+     * @param authentication la autenticación del usuario
+     * @return el token JWT generado
+     */
     public String createToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
 
@@ -45,7 +54,14 @@ public class JwtUtils {
         return jwtToken;
     }
 
-    public DecodedJWT validateToken(String token) {
+    /**
+     * Valida un token y devuelve el objeto DecodedJWT si es válido.
+     *
+     * @param token el token JWT a validar
+     * @return el objeto DecodedJWT si el token es válido
+     * @throws JWTVerificationException si el token no es válido
+     */
+    public DecodedJWT validateToken(String token) throws JWTVerificationException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
 
@@ -56,14 +72,27 @@ public class JwtUtils {
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT;
         } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Token invalid, not Authorized");
+            throw new JWTVerificationException("Token inválido, no autorizado");
         }
     }
 
-    public String extractUsername(DecodedJWT decodedJWT){
+    /**
+     * Extrae el nombre de usuario del objeto DecodedJWT.
+     *
+     * @param decodedJWT el objeto DecodedJWT
+     * @return el nombre de usuario extraído
+     */
+    public String extractUsername(DecodedJWT decodedJWT) {
         return decodedJWT.getSubject().toString();
     }
 
+    /**
+     * Obtiene una claim específica del objeto DecodedJWT.
+     *
+     * @param decodedJWT el objeto DecodedJWT
+     * @param claimName el nombre de la claim a obtener
+     * @return la claim específica del objeto DecodedJWT
+     */
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {
         return decodedJWT.getClaim(claimName);
     }
