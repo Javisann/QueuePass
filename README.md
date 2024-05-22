@@ -1,4 +1,6 @@
-
+<p align="center">
+  <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green">
+</p>
 # QueuePass
 
 *Programa realizado para el Trabajo Fin de Grado.*
@@ -7,9 +9,11 @@ Programa que incluye 2 aplicaciones, una API REST para el manejo de la base de d
 
 Este proyecto esta enfocado a la creacion de una aplicacion web que permite a los clientes unirse a colas virtuales y explorar menús y promociones antes de llegar al restaurante, optimizando y mejorando la experiencia.
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+<p align="center">
+  <img src="https://github.com/Javisann/QueuePass/assets/66449602/8fc6efba-dbda-4dbb-8231-4e8fbfa3339f">
+</p>
 
-### Índice 
+## Índice 
 
 - [Descripción](#descripción)
 
@@ -31,7 +35,7 @@ La aplicación, QueuePass, es una solución innovadora diseñada para mejorar la
 
 ## Arquitectura
 
-![Imgur](https://imgur.com/868WYrN.png)
+![arquitectura](https://github.com/Javisann/QueuePass/assets/66449602/14fa1f9a-5521-486e-94fa-6ae421465450)
 
 ## Tecnologías
 
