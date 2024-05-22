@@ -9,6 +9,22 @@ Este proyecto esta enfocado a la creacion de una aplicacion web que permite a lo
 
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
+### Índice 
+
+- [Descripción](#descripción)
+
+- [Arquitectura](#arquitectura)
+
+- [Tecnologías](#tecnologías)
+
+- [Características](#características)
+
+- [¿Por qué QueuePass?](#por-qué-queueass)
+
+- [Instalación](#instalación-mysql)
+
+- [Autor](#autor)
+
 ## Descripción
 
 La aplicación, QueuePass, es una solución innovadora diseñada para mejorar la eficiencia en la gestión de colas en establecimientos. Permite a los clientes reservar su lugar virtual en la cola desde sus dispositivos móviles, evitando así las largas esperas en la entrada del restaurante. Además de gestionar las colas, la aplicación ofrece a los usuarios la posibilidad de explorar el menú y las promociones disponibles en el restaurante antes de su llegada, lo que contribuye a una experiencia más conveniente y personalizada.
@@ -24,13 +40,13 @@ La aplicación, QueuePass, es una solución innovadora diseñada para mejorar la
 - ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Nuxtjs](https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82) ![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
 - ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
   
-## Caracteristicas
+## Características
 
-- Gestión de Colas Virtuales: Los clientes pueden unirse a la cola virtual desde cualquier lugar antes de llegar al restaurante.
-- Exploración de Menús y Promociones: Los usuarios pueden ver el menú completo y las ofertas especiales ofrecidas por el restaurante.
-- Registro y Autenticación de Usuarios: Los clientes pueden crear una cuenta y guardar sus preferencias para futuras visitas.
-- Visualización del administrador: El administrador podr ver la cola y gestionarla además de cambiar ajustes de la empresa y la carta.
-
+- :heavy_check_mark: `Gestión de Colas Virtuales:` Los clientes pueden unirse a la cola virtual desde cualquier lugar antes de llegar al restaurante.
+- :heavy_check_mark: `Exploración de Menús y Promociones:` Los usuarios pueden ver el menú completo y las ofertas especiales ofrecidas por el restaurante.
+- :heavy_check_mark: `Registro y Autenticación de Usuarios:` Los clientes pueden crear una cuenta y guardar sus preferencias para futuras visitas.
+- :heavy_check_mark: `Visualización del administrador:` El administrador podrá ver la cola y gestionarla además de cambiar ajustes de la empresa y la carta.
+ 
 
 ## ¿Por qué QueuePass?
 
@@ -48,20 +64,20 @@ Crear la base de datos
 ```sql
   CREATE DATABASE nombre;
 ```
-Ejecutar el script **prueba.sql**
+Ejecutar el script `prueba.sql`
 
 ## Instalación Back-End
 
 #### Requisitos
 
 - **JDK 17**
-- **Entorno de desarrollo** - Recomiendo **IntelliJ** o **EclipseIDE**
+- **Entorno de desarrollo** - Recomiendo `IntelliJ` o `EclipseIDE`
 
-Ejecutar XAMPP e iniciar MySQL
+Ejecutar `XAMPP` e iniciar `MySQL`
 
-Abrir queuepass-api-rest con el entorno de desarrollo
+Abrir `queuepass-api-rest` con el entorno de desarrollo
 
-Configurar el archivo **"application.properties"**. src > main > resources > application.properties
+Configurar el archivo `application.properties`. src > main > resources > application.properties
 
 ```terminal
     spring.jpa.hibernate.ddl-auto=update
@@ -71,14 +87,14 @@ Configurar el archivo **"application.properties"**. src > main > resources > app
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
     spring.jpa.show-sql=true
 ```
-Ejecutar *App.java*
+Ejecutar ***App.java***
 
 ## Instalación Front -End
 
 #### Requisitos
 
 - **Node.js**
-- **Text editor** - Recomiendo **Visual Studio Code** con la extension de **Vue** oficial
+- **Text editor** - Recomiendo `Visual Studio Code` con la extension de `Vue` oficial
 - **Terminal** - Se puede usar la del propio VS Code
 
 Abrir la terminal y entrar en la aplicación
