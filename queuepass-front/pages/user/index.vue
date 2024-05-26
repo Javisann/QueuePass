@@ -1,5 +1,5 @@
 <template>
-  <div v-if="inQueue == false" class="flex flex-col justify-between items-center h-full">
+  <div v-if="!inQueue" class="flex flex-col justify-between items-center h-full">
     <GeneralLogos></GeneralLogos>
     <div class="flex-1 w-full max-w-sm mx-auto mb-20 p-6">
       <div class="border-b mb-2">
@@ -33,19 +33,19 @@
       <p class="border-t pt-5 text-lg text-center text-gray-500 mt-10">Esperando mesa para <b>{{ people }} personas</b>
       </p>
     </div>
-
   </div>
 </template>
 
 <script setup>
-
+import { ref, onMounted, onUnmounted } from 'vue';
 import axios from "axios";
 import BACK_URL from "../../config/variables.js"
 
 const inQueue = ref(false); // definimos boolean para saber el estado
 const people = ref(1); // Definimos variable para las personas
-const peopleInQueue = ref(); // Definimos variable para las personas en la cola
-const peopleCount = ref(); // Definimos variable de tu posicion en la cola
+const peopleInQueue = ref(0); // Definimos variable para las personas en la cola
+const peopleCount = ref(0); // Definimos variable de tu posicion en la cola
+
 function joinQueue(newPeople) {
   people.value = newPeople; // Coge parametros del evento y se los asigna a la variable anterior
   postData(); // Llama a la funcion postData
@@ -55,6 +55,12 @@ let token = null;
 if (typeof window !== "undefined") { // Comprueba que la ventana esta definida
   token = localStorage.getItem("token"); // Obtiene el token del local storage
 }
+
+let username = null;
+if (typeof window !== "undefined") { // Comprueba que la ventana esta definida
+  username = localStorage.getItem("username"); // Obtiene el token del local storage
+}
+
 const fetchPeopleInQueue = async () => {
   try {
     const response = await axios.get(
@@ -71,7 +77,6 @@ const fetchPeopleInQueue = async () => {
 };
 
 const fetchPositionCount = async () => {
-
   const id = localStorage.getItem("id"); // Obtiene el id del local storage
 
   try {
@@ -100,49 +105,57 @@ const postData = async () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },);
+      }
+    );
 
-      localStorage.setItem("id", response.data.id); // Guarda el id en el local storage
+    localStorage.setItem("id", response.data.id); // Guarda el id en el local storage
 
-    inQueue.value = !inQueue.value; // Cambia el estado al contrario al que este
-    fetchPositionCount()
-    
+    inQueue.value = true; // Cambia el estado a "en cola"
+    fetchPositionCount(); // Llama al metodo de la posición en la cola
+
+    if (inQueue.value) {
+      intervalId = setInterval(() => {
+        fetchPositionCount()
+        console.log("Cambio");
+      }, 5000); // Actualiza cada 5 segundos el metodo de la posición en la cola
+    }
+
   } catch (error) {
     console.error("Error post data:", error);
   }
 };
 
 const deleteData = async () => {
-
   const id = localStorage.getItem("id"); // Obtiene el id del local storage
 
   try {
-    const response = await axios.delete(
+    await axios.delete(
       `${BACK_URL}/api/queue/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      }
+    );
 
-    inQueue.value = !inQueue.value; // Cambia el estado al contrario al que este
-
+    inQueue.value = false; // Cambia el estado a "fuera de la cola"
+    clearInterval(intervalId); // Detiene la actualización periódica de la posición en la cola
   } catch (error) {
-    console.error("Error post data:", error);
+    console.error("Error deleting data:", error);
   }
 };
 
-//Coge del local storage el nombre de usuario
-let username = null;
-if (typeof window !== "undefined") { // Comprueba que la ventana esta definida
-  username = localStorage.getItem("username"); // Obtiene el token del local storage
-}
+// Bucle para actualizar la posición en la cola
+let intervalId;
+onMounted(() => {
+  fetchPeopleInQueue(); // Llama al metodo de la gente que esta en la cola
+});
 
-
-onMounted(fetchPeopleInQueue);
+onUnmounted(() => {
+  clearInterval(intervalId); // Detiene la actualización periódica de la posición en la cola
+});
 
 definePageMeta({
   layout: "user" // Le asignamos al layout que queremos usar
 })
-
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-10 flex flex-col items-center mb-5">
+  <div id="list" class="p-10 flex flex-col items-center mb-5">
     <div class="flex items-center justify-between border-b pb-4">
       <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
         Carta del restaurante
@@ -147,37 +147,31 @@ export default {
 };
 </script>
 
-<style>
-.table-container {
-  max-height: 100%;
-  overflow-y: auto;
-  position: relative;
+
+<!--Efecto para la lista-->
+<style scoped>
+@keyframes show {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    scale: 25%;
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    scale: 100%;
+  }
 }
 
-thead {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+#list > div {
+  view-timeline-name: --component;
+  view-timeline-inset: block;
+
+  animation-timeline: --component;
+  animation-name: show;
+
+  animation-range: entry 0% cover 25%;
+  animation-fill-mode: both;
 }
 
-thead tr {
-  background: inherit;
-}
-
-tbody {
-  display: block;
-  max-height: 55vh;
-  overflow-y: auto;
-}
-
-thead,
-tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-.absolute {
-  z-index: 20;
-}
 </style>
