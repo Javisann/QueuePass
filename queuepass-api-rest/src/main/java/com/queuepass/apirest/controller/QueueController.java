@@ -28,6 +28,27 @@ public class QueueController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/{id}")
+    public ResponseEntity<Integer> positionCount(@PathVariable Long id){
+        return ResponseEntity.ok(this.queueService.positionCount(id));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/people")
+    public ResponseEntity<Integer> peopleInQueue(){
+        return ResponseEntity.ok(this.queueService.peopleInQueue());
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping
+    public ResponseEntity<QueueModel> create(@RequestBody QueueModel model){
+        if(model.getId() == null){
+            return ResponseEntity.status(HttpStatus.CREATED).body( this.queueService.save(model));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id){

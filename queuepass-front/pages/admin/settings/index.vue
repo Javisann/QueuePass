@@ -96,9 +96,9 @@ export default {
 
         const fileInput = ref(null);
 
-        //Le pasas el token del usuario registrado para pasarselo a la cabecera del request
+        //Defines el token del usuario registrado para pasarselo a la cabecera del request
         let token = null;
-        if (typeof window !== "undefined") { // Para que cuando recargue la pagina se mantenga el token
+        if (typeof window !== "undefined") { // Comprueba que la ventana esta definida
             token = localStorage.getItem("token"); // Obtiene el token del local storage
         }
         const fetchData = async () => {

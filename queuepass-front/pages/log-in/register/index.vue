@@ -12,10 +12,10 @@
           </h1>
           <form class="max-w-sm mx-auto">
             <div class="mb-5">
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-              <input v-model="username" type="email" id="email"
+              <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+              <input v-model="username" type="text" id="username"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                placeholder="ejemplo@gmail.com" required />
+                placeholder="pepito123" required />
             </div>
             <div class="mb-5">
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tu
@@ -95,8 +95,11 @@ export default {
           username: username.value,
           password: password.value,
         });
+        
         //Guardamos en el localstorage el token
         localStorage.setItem("token", response.data.token);
+        // Guardar el nombre de usuario en el localStorage
+        localStorage.setItem("username", response.data.username);
 
         //Redirigimos a la pagina usuario
         window.location.href = '/user';

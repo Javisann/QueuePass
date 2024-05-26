@@ -6,6 +6,7 @@ import lombok.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -20,12 +21,17 @@ public class QueueModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "user_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private UserModel userModel;
+    private String username;
 
-    private String date;
+    private LocalDateTime date;
 
     private Integer num_personas;
-    
+
+    // Funcion para que guarde la fecha actual en la base de datos
+    @PrePersist
+    protected void onCreated(){
+        if(this.date == null){
+            this.date = LocalDateTime.now();
+        }
+    }
 }

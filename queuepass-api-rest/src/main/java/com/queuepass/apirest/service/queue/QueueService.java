@@ -14,4 +14,8 @@ public interface QueueService {
 
     public void deleteById(Long id);
 
+    public Integer positionCount(Long id);
+
+    public Integer peopleInQueue();
+
 }

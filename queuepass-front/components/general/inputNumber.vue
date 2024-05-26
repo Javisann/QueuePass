@@ -4,7 +4,7 @@
       <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cuantas
         personas:</label>
       <div class="flex justify-center items-center mb-6">
-        <button type="button" id="decrement-button" @click="people > 0 ? people-- : null" :disabled="people === 0"
+        <button type="button" id="decrement-button" @click="people > 1 ? people-- : null" :disabled="people === 0"
           data-input-counter-decrement="quantity-input"
           class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
           <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +41,6 @@ let people = ref(1); // varaible reactiva de las personas seleccionadas
 const emits = defineEmits(["changeView"]); // Definir un emit para pasarselo al padre
 
 function joinQueue() { // hacer funcion que llama al emit y emite el evento
-  emits("changeView", people); // parametro people que le pasas al darle al boton
+  emits("changeView", people.value); // parametro people que le pasas al darle al boton
 }
 </script>

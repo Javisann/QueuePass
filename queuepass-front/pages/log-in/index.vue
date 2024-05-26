@@ -12,10 +12,10 @@
           </h1>
           <form class="space-y-4 md:space-y-6" action="#">
             <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-              <input v-model="username" type="email" name="email" id="email"
+              <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+              <input v-model="username" type="text" name="username" id="username"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="ejemplo@gmail.com" required="true" />
+                placeholder="pepito123" required="true" />
             </div>
             <div>
               <label for="password"
@@ -90,6 +90,8 @@ export default {
 
         // Guardar el token en el localStorage
         localStorage.setItem("token", response.data.token);
+        // Guardar el nombre de usuario en el localStorage
+        localStorage.setItem("username", response.data.username);
         
         // Sacar los nombres de los roles del array de objetos
         const userRoles = response.data.authorities.map(role => role.authority);

@@ -28,5 +28,13 @@ public class QueueServiceImpl implements QueueService{
         this.queueRepository.deleteById(id);
     }
 
+    @Override
+    public Integer positionCount(Long id) {
+        return this.queueRepository.positionCount(id);
+    }
 
+    @Override
+    public Integer peopleInQueue() {
+        return this.queueRepository.peopleInQueue();
+    }
 }
