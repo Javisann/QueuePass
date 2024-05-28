@@ -1,8 +1,7 @@
 <template>
   <form class="max-w-xs mx-auto">
     <div class="flex flex-col items-center">
-      <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cuantas
-        personas:</label>
+      <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de personas:</label>
       <div class="flex justify-center items-center mb-6">
         <button type="button" id="decrement-button" @click="people > 1 ? people-- : null" :disabled="people === 0"
           data-input-counter-decrement="quantity-input"

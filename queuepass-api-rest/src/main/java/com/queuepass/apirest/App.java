@@ -99,13 +99,4 @@ public class App {
 			userRepository.saveAll(List.of(userJavier, userAlvaro, userDavid, userDaniel));*/
 		};
 	}
-
-	public String fecha()
-	{
-		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-		long miliseconds = System.currentTimeMillis();
-		java.sql.Date date = new Date(miliseconds);
-		String dateFormateada = formato.format(date);
-		return dateFormateada;
-	}
 }

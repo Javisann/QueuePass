@@ -24,10 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -88,6 +85,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String username = authLoginRequest.username();
         String password = authLoginRequest.password();
 
+        String name = findNameByUsername(username);
+
+
         // Autenticar al usuario
         Authentication authentication = this.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -96,7 +96,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String accessToken = jwtUtils.createToken(authentication);
 
         // Crear y devolver un response de autenticación
-        AuthResponse authResponse = new AuthResponse(username, "Usuario inició sesión correctamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
+        AuthResponse authResponse = new AuthResponse(username,  name,"Usuario inició sesión correctamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
         return authResponse;
     }
 
@@ -134,6 +134,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public AuthResponse createUser(AuthCreateUserRequest createRoleRequest) {
 
         String username = createRoleRequest.username();
+        String name = createRoleRequest.name();
         String password = createRoleRequest.password();
         List<String> roleRequest = List.of("USER"); // Por defecto que sea user siempre que un usuario se registre
 
@@ -150,6 +151,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         // Crear un nuevo usuario
         UserModel userModel = UserModel.builder()
                 .username(username)
+                .name(name)
                 .password(passwordEncoder.encode(password))
                 .roles(roleModelList)
                 .isEnabled(true)
@@ -175,7 +177,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String accessToken = jwtUtils.createToken(authentication);
 
         // Crear y devolver un response de autenticación
-        AuthResponse authResponse = new AuthResponse(username, "Usuario creado exitosamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
+        AuthResponse authResponse = new AuthResponse(username, name , "Usuario creado exitosamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
         return authResponse;
+    }
+
+    public String findNameByUsername(String username){
+        return userRepository.findNameByUsername(username);
     }
 }

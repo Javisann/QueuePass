@@ -1,7 +1,7 @@
 <template>
-  <div id="list" class="p-10 flex flex-col items-center mb-5">
-    <div class="flex items-center justify-between border-b pb-4">
-      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+  <div id="list" class="p-10 flex flex-col items-center mb-5 bg-gradient-to-r from-blue-200 to-red-200 min-h-screen">
+    <div class="flex items-center justify-between border-b-2 border-black pb-4">
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
         Carta del restaurante
       </h1>
     </div>
@@ -153,12 +153,10 @@ export default {
 @keyframes show {
   from {
     opacity: 0;
-    filter: blur(5px);
-    scale: 25%;
+    scale: 15%;
   }
   to {
     opacity: 1;
-    filter: blur(0);
     scale: 100%;
   }
 }
