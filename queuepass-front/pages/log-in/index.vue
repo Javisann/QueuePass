@@ -1,11 +1,13 @@
 <template>
-  <section class="bg-gray-50 dark:bg-gray-900 absolute h-full w-full">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-full w-full">
-      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-        <img class="w-40 mr-2" src="../../assets/images/queue-pass-logo-fondo.png" alt="logo" />
-      </a>
-      <div
-        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+  <section class="min-h-screen w-full bg-cover bg-center section-bg relative">
+    <div class="absolute inset-0 bg-black opacity-50 z-10"></div> <!-- Capa transparente -->
+    <div class="relative flex flex-col items-center justify-center px-4 py-8 mx-auto md:h-screen lg:py-0 h-full w-full z-20">
+      <div class="mt-32 w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex justify-center mt-6">
+          <a href="#" class="text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-40" src="../../assets/images/queue-pass-logo-fondo.png" alt="logo" />
+          </a>
+        </div>
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Inicia sesión con tu cuenta
@@ -92,7 +94,7 @@ export default {
         localStorage.setItem("token", response.data.token);
         // Guardar el nombre en el localStorage
         localStorage.setItem("name", response.data.name);
-        
+
         // Sacar los nombres de los roles del array de objetos
         const userRoles = response.data.authorities.map(role => role.authority);
         // Filtrar los roles que comienzan por "ROLE_" (Los roles siempre empiezan por ese prefijo)
@@ -120,3 +122,10 @@ export default {
 };
 </script>
 
+<style scoped>
+.section-bg {
+  background-image: url('../../assets/images/vips-restaurant.jpg');
+  background-size: cover;
+  background-position: center;
+}
+</style>

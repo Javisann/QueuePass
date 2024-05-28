@@ -21,7 +21,7 @@
       </form>
     </div>
 
-    <div v-if="loading">Cargando...</div>
+    <div v-if="loading" class="mt-5">Cargando...</div>
 
     <!--Por cada objeto dentro del response hace un card de estos-->
     <div v-for="item in data" :id="item.id">

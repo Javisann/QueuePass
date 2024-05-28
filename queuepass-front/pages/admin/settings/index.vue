@@ -107,6 +107,7 @@ export default {
                     `${BACK_URL}/api/company`,
                     {
                         headers: {
+                            "ngrok-skip-browser-warning": "69420",
                             Authorization: `Bearer ${token}`,
                         },
                     });
