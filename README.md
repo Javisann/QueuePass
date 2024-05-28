@@ -1,6 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green">
 </p>
+
 # QueuePass
 
 *Programa realizado para el Trabajo Fin de Grado.*
