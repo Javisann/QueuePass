@@ -1,23 +1,25 @@
 <template>
   <div id="list" class="p-10 flex flex-col items-center mb-5 bg-gradient-to-r from-blue-200 to-red-200 min-h-screen">
-    <div class="flex items-center justify-between border-b-2 border-black pb-4">
-      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-        Carta del restaurante
-      </h1>
+    <div class="w-full">
+      <div class="flex justify-center border-b border-black pb-4 w-full">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+          Carta del restaurante
+        </h1>
+      </div>
+      <form class="mt-4 max-w-sm mx-auto">
+        <select id="tipos"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          v-model="selectedType" @change="fetchData">
+          <option value="" disabled selected>Selecciona un tipo</option>
+          <option value="hamburguesa">Hamburguesas</option>
+          <option value="entrante">Entrantes</option>
+          <option value="ensalada">Ensaladas</option>
+          <option value="sandwich">Sandwiches</option>
+          <option value="postre">Postres</option>
+          <option value="bebida">Bebidas</option>
+        </select>
+      </form>
     </div>
-    <form class="mt-4 max-w-sm mx-auto">
-      <select id="tipos"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        v-model="selectedType" @change="fetchData">
-        <option value="" disabled selected>Selecciona un tipo</option>
-        <option value="hamburguesa">Hamburguesas</option>
-        <option value="entrante">Entrantes</option>
-        <option value="ensalada">Ensaladas</option>
-        <option value="sandwich">Sandwiches</option>
-        <option value="postre">Postres</option>
-        <option value="bebida">Bebidas</option>
-      </select>
-    </form>
 
     <div v-if="loading">Cargando...</div>
 
