@@ -123,6 +123,7 @@ Ejecutar la aplicación con el comando
 ```
 ## Autor
 
-- [@Javisann](https://github.com/Javisann)
+[<img src="https://avatars.githubusercontent.com/u/66449602?v=4" width=115><br><sub>Javier Sánchez Prieto</sub>](https://github.com/Javisann)
+
 
 
