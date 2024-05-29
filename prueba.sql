@@ -107,13 +107,10 @@ DROP TABLE IF EXISTS `queue`;
 CREATE TABLE `queue` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime(6) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `num_personas` int(11) DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_49dl7cqd7vvwi982lengkvq23` (`user_id`),
-  CONSTRAINT `FKwa29rxwm83sj1xgsegxdyxbt` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +218,7 @@ CREATE TABLE `users` (
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_r43af9ap4edm43mmtq01oddj6` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-28 13:48:06
+-- Dump completed on 2024-05-29 23:01:19

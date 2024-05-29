@@ -1,5 +1,5 @@
 <template>
-  <div id="list" class="p-10 flex flex-col items-center mb-5 bg-gradient-to-r from-blue-200 to-red-200 min-h-screen">
+  <div id="list" class="p-10 flex flex-col items-center mb-5 bg-gradient-to-bl from-white to-blue-200 min-h-screen">
     <div class="w-full">
       <div class="flex justify-center border-b border-black pb-4 w-full">
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">

@@ -30,6 +30,9 @@ public class QueueServiceImpl implements QueueService{
 
     @Override
     public Integer positionCount(Long id) {
+        if(!this.queueRepository.existsById(id)){
+            return 0;
+        }
         return this.queueRepository.positionCount(id);
     }
 
