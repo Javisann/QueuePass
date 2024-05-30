@@ -1,5 +1,5 @@
 <template>
-  <div class="p-10 flex-1 bg-gradient-to-bl from-white to-blue-100">
+  <div class="p-10 flex-1 bg-gradient-to-bl from-white to-blue-100 h-screen">
     <div class="flex items-center justify-between border-b pb-4">
       <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
         Carta del restaurante
@@ -343,6 +343,8 @@ export default {
             if (item.image != null) {
               const urlParts = item.image.split("/").slice(3).join("/");
               const imageUrl = `${BACK_URL}/${urlParts}`;
+              //item.image = imageUrl;
+
 
               // Petición para obtener el contenido de la imagen
               try {
@@ -467,7 +469,7 @@ export default {
       }
     }
 
-    onMounted(fetchData);
+    onBeforeMount(fetchData);
 
     return {
       selectedType,

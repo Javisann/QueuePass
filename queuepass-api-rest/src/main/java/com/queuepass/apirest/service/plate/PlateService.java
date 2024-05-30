@@ -18,6 +18,4 @@ public interface PlateService {
     PlateModel save(PlateModel plate);
 
     public void deleteById(Long id);
-
-
 }
