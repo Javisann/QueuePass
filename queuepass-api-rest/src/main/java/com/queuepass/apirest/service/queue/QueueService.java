@@ -4,6 +4,7 @@ import com.queuepass.apirest.model.QueueModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface QueueService {
@@ -17,5 +18,7 @@ public interface QueueService {
     public Integer positionCount(Long id);
 
     public Integer peopleInQueue();
+
+    public Optional<QueueModel> findQueueModelByName(String name);
 
 }

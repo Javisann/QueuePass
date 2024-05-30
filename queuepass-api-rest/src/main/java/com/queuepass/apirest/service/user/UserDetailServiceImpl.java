@@ -96,7 +96,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String accessToken = jwtUtils.createToken(authentication);
 
         // Crear y devolver un response de autenticación
-        AuthResponse authResponse = new AuthResponse(username,  name,"Usuario inició sesión correctamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
+        AuthResponse authResponse = new AuthResponse(username, name, "Usuario inició sesión correctamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
         return authResponse;
     }
 
@@ -177,11 +177,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String accessToken = jwtUtils.createToken(authentication);
 
         // Crear y devolver un response de autenticación
-        AuthResponse authResponse = new AuthResponse(username, name , "Usuario creado exitosamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
+        AuthResponse authResponse = new AuthResponse(username, name, "Usuario creado exitosamente", (List<GrantedAuthority>) authentication.getAuthorities().stream().toList(), accessToken, true);
         return authResponse;
     }
 
-    public String findNameByUsername(String username){
+    public String findNameByUsername(String username) {
         return userRepository.findNameByUsername(username);
     }
 }

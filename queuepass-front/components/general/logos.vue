@@ -4,4 +4,3 @@
         <img src="../../assets/images/logo-vips-sin-fondo.png" class="w-1/2 h-auto">
     </div>
 </template>
-

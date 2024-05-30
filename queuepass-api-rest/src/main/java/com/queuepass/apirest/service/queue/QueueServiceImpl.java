@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class QueueServiceImpl implements QueueService{
+public class QueueServiceImpl implements QueueService {
 
     @Autowired
     private QueueRepository queueRepository;
@@ -30,7 +31,7 @@ public class QueueServiceImpl implements QueueService{
 
     @Override
     public Integer positionCount(Long id) {
-        if(!this.queueRepository.existsById(id)){
+        if (!this.queueRepository.existsById(id)) {
             return 0;
         }
         return this.queueRepository.positionCount(id);
@@ -39,5 +40,10 @@ public class QueueServiceImpl implements QueueService{
     @Override
     public Integer peopleInQueue() {
         return this.queueRepository.peopleInQueue();
+    }
+
+    @Override
+    public Optional<QueueModel> findQueueModelByName(String name) {
+        return this.queueRepository.findQueueModelByName(name);
     }
 }

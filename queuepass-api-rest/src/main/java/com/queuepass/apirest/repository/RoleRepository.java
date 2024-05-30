@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface RoleRepository extends CrudRepository<RoleModel, Long> {
-
     List<RoleModel> findRoleModelsByRoleEnumIn(List<String> roleName); //Devuelve los roles que existen en la base de datos
                                                                        //Para evitar poner roles que no existen
 }

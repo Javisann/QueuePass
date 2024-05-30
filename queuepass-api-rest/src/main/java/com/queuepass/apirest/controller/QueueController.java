@@ -1,5 +1,7 @@
 package com.queuepass.apirest.controller;
 
+import com.queuepass.apirest.error.ApiError;
+import com.queuepass.apirest.error.UserNotFoudException;
 import com.queuepass.apirest.model.QueueModel;
 import com.queuepass.apirest.service.queue.QueueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/queue")
@@ -29,7 +32,7 @@ public class QueueController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Integer> positionCount(@PathVariable Long id){
         return ResponseEntity.ok(this.queueService.positionCount(id));
     }
@@ -56,4 +59,10 @@ public class QueueController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User deleted");
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @GetMapping("/name/{name}")
+    public QueueModel findByName(@PathVariable String name){
+        return this.queueService.findQueueModelByName(name)
+                .orElseThrow(() -> new UserNotFoudException(name));
+    }
 }

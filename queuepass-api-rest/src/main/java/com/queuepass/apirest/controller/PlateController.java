@@ -41,17 +41,17 @@ public class PlateController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> create(@RequestPart("new") PlateModel plate, @RequestPart(required = false) MultipartFile file) {
-        if(plate.getId() != null){
+        if (plate.getId() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(HttpStatus.BAD_REQUEST, "You cant create a plate with assigned ID"));
         }
 
-        if(plateService.findByName(plate.getName()).isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiError(HttpStatus.CONFLICT, "The plate with name : '"+ plate.getName() + "' is already exists"));
+        if (plateService.findByName(plate.getName()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiError(HttpStatus.CONFLICT, "The plate with name : '" + plate.getName() + "' is already exists"));
         }
         String urlImage = null;
 
-        if (file != null ) {
-            if(!file.isEmpty()){
+        if (file != null) {
+            if (!file.isEmpty()) {
                 String image = storageService.store(file);
                 urlImage = MvcUriComponentsBuilder
                         .fromMethodName(FileUploadController.class, "serveFile", image)
@@ -59,21 +59,21 @@ public class PlateController {
                 plate.setImage(urlImage);
             }
         }
-        plate =  this.plateService.save(plate);
+        plate = this.plateService.save(plate);
         return ResponseEntity.ok(plate);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> update(@RequestPart("new") PlateModel plate, @RequestPart(required = false) MultipartFile file) {
-        if(plate.getId() == null){
+        if (plate.getId() == null) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(HttpStatus.BAD_REQUEST, "To change properties to the plate, you must specify an ID"));
         }
 
         String urlImage = null;
 
-        if (file != null ) {
-            if(!file.isEmpty()){
+        if (file != null) {
+            if (!file.isEmpty()) {
                 String image = storageService.store(file);
                 urlImage = MvcUriComponentsBuilder
                         .fromMethodName(FileUploadController.class, "serveFile", image)
@@ -81,13 +81,13 @@ public class PlateController {
                 plate.setImage(urlImage);
             }
         }
-        plate =  this.plateService.save(plate);
+        plate = this.plateService.save(plate);
         return ResponseEntity.ok(plate);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable Long id){
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
         this.plateService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class PlateServiceImpl implements PlateService{
+public class PlateServiceImpl implements PlateService {
 
     @Autowired
     PlateRepository plateRepository;

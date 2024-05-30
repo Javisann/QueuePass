@@ -33,6 +33,7 @@ public class SecurityConfig {
 
     /**
      * Configura el filtro de seguridad.
+     *
      * @param httpSecurity el objeto HttpSecurity
      * @return el SecurityFilterChain configurado
      */
@@ -52,6 +53,7 @@ public class SecurityConfig {
 
     /**
      * Crea el AuthenticationManager.
+     *
      * @param authenticationConfiguration la configuración de autenticación
      * @return el AuthenticationManager creado
      */
@@ -62,6 +64,7 @@ public class SecurityConfig {
 
     /**
      * Crea el AuthenticationProvider.
+     *
      * @param userDetailService el UserDetailServiceImpl
      * @return el AuthenticationProvider creado
      */
@@ -75,6 +78,7 @@ public class SecurityConfig {
 
     /**
      * Crea el PasswordEncoder.
+     *
      * @return el PasswordEncoder creado
      */
     @Bean

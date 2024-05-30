@@ -42,8 +42,8 @@ public class CompanyController {
     public ResponseEntity<CompanyModel> save(@RequestPart("new") CompanyModel company, @RequestPart(required = false) MultipartFile file) {
         String urlImage = null;
 
-        if (file != null ) {
-            if(!file.isEmpty()){
+        if (file != null) {
+            if (!file.isEmpty()) {
                 String image = storageService.store(file);
                 urlImage = MvcUriComponentsBuilder
                         .fromMethodName(FileUploadController.class, "serveFile", image)
@@ -51,12 +51,12 @@ public class CompanyController {
                 company.setImage(urlImage);
             }
         }
-        company =  this.companyService.save(company);
+        company = this.companyService.save(company);
         return ResponseEntity.ok(company);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteById(){
+    public ResponseEntity<String> deleteById() {
         this.companyService.delete();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User deleted");
     }

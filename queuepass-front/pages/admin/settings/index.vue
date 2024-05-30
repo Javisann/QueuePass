@@ -96,7 +96,7 @@ export default {
 
         const fileInput = ref(null);
 
-        //Defines el token del usuario registrado para pasarselo a la cabecera del request
+        // Defines el token del usuario registrado para pasarselo a la cabecera del request
         let token = null;
         if (typeof window !== "undefined") { // Comprueba que la ventana esta definida
             token = localStorage.getItem("token"); // Obtiene el token del local storage
@@ -118,7 +118,6 @@ export default {
         };
 
         const updateData = async (event) => {
-
             try {
                 const formData = new FormData();
                 formData.append("new", new Blob([JSON.stringify(selectedItem.value)], { type: "application/json" }));

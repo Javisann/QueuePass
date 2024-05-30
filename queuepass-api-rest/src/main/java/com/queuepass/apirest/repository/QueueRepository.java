@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface QueueRepository extends JpaRepository<QueueModel, Long> {
 
@@ -21,4 +23,6 @@ public interface QueueRepository extends JpaRepository<QueueModel, Long> {
             FROM queue""",
             nativeQuery = true)
     public Integer peopleInQueue();
+
+    public Optional<QueueModel> findQueueModelByName(String name);
 }

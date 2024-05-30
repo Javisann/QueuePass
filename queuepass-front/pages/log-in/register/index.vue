@@ -1,7 +1,8 @@
 <template>
   <section class="min-h-screen w-full bg-cover bg-center section-bg relative">
     <div class="absolute inset-0 bg-black opacity-50 z-10"></div> <!-- Capa transparente -->
-    <div class="relative flex flex-col items-center justify-center px-4 py-8 mx-auto md:h-screen lg:py-0 h-full w-full z-20">
+    <div
+      class="relative flex flex-col items-center justify-center px-4 py-8 mx-auto md:h-screen lg:py-0 h-full w-full z-20">
       <div
         class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div class="flex justify-center mt-6">
@@ -21,7 +22,8 @@
                 placeholder="example@gmail.com" required />
             </div>
             <div class="mb-5">
-              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre Completo</label>
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre
+                Completo</label>
               <input v-model="name" type="text" id="name"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 placeholder="Alvaro Perez" required />
@@ -29,7 +31,7 @@
             <div class="mb-5">
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tu
                 contraseña</label>
-              <input v-model="password"type="password" id="password"
+              <input v-model="password" type="password" id="password"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required />
             </div>
@@ -43,7 +45,7 @@
             </div>
             <div class="flex items-start mb-5">
               <div class="flex items-center h-5">
-                <input id="terms" type="checkbox" value=""
+                <input v-model="acceptTerms" id="terms" type="checkbox" value=""
                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                   required />
               </div>
@@ -54,7 +56,6 @@
             <button @click.prevent="postData()" type="submit"
               class="w-full text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrar
               cuenta nueva</button>
-
             <p class="mt-4 text-sm font-light text-gray-500 dark:text-gray-400">
               ¿Ya tienes cuenta?
               <a href="/log-in" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Inicia
@@ -63,8 +64,8 @@
           </form>
         </div>
       </div>
-      <!--Alerta-->
-      <div v-if="alert == true"
+      <!--Alerta para la contraseña-->
+      <div v-if="alertPassword == true"
         class="mt-4 flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
         role="alert">
         <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +76,20 @@
         <span class="sr-only">Info</span>
         <div>
           <span class="font-medium">Error!</span> Las contraseñas no coinciden.
+        </div>
+      </div>
+      <!--Alerta para los terminos y condiciones-->
+      <div v-if="alertTerms == true"
+        class="mt-4 flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+        role="alert">
+        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor" viewBox="0 0 20 20">
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+          <span class="font-medium">Error!</span> Tienes que aceptar los terminos y condiciones.
         </div>
       </div>
     </div>
@@ -91,13 +106,26 @@ export default {
     const name = ref("");
     const password = ref("");
     const secondPassword = ref("");
-    const alert = ref(false);
+    const alertPassword = ref(false);
+    const acceptTerms = ref(false);
+    const alertTerms = ref(false);
 
     //Llamada a la API para registrar un usuario
     const postData = async () => {
       try {
         if (password.value !== secondPassword.value) { //Si la contraseña1 no coincide con la contraseña2 sale una alerta
-          alert.value = true;
+          alertPassword.value = true;
+          password.value = "";
+          secondPassword.value = "";
+          acceptTerms.value = false;
+          return;
+        }
+
+        if (!acceptTerms.value) { // Si los términos no están aceptados, muestra una alerta
+          alertTerms.value = true;
+          password.value = "";
+          secondPassword.value = "";
+          acceptTerms.value = false;
           return;
         }
 
@@ -106,7 +134,7 @@ export default {
           name: name.value,
           password: password.value,
         });
-        
+
         //Guardamos en el localstorage el token
         localStorage.setItem("token", response.data.token);
         // Guardar el nombre en el localStorage
@@ -124,7 +152,9 @@ export default {
       name,
       password,
       postData,
-      alert,
+      alertPassword,
+      alertTerms,
+      acceptTerms,
       secondPassword
     };
   },

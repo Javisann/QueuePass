@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface CompanyService {
 
     Optional<CompanyModel> find();
+
     CompanyModel save(CompanyModel company);
+
     void delete();
 
 }

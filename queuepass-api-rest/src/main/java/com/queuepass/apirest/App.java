@@ -26,13 +26,13 @@ import java.util.Set;
 @SpringBootApplication
 public class App {
 
-	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 
-	@Bean
-	CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository, PlateRepository plateRepository, QueueRepository queueRepository){
-		return args -> {
+    @Bean
+    CommandLineRunner init(UserRepository userRepository, StorageService storageService, CompanyRepository companyRepository, PlateRepository plateRepository, QueueRepository queueRepository) {
+        return args -> {
 
 			/*
 			//CREATE PERMISSIONS
@@ -97,6 +97,6 @@ public class App {
 					.build();
 
 			userRepository.saveAll(List.of(userJavier, userAlvaro, userDavid, userDaniel));*/
-		};
-	}
+        };
+    }
 }

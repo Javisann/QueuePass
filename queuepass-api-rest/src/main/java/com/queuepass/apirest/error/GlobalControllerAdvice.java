@@ -13,11 +13,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoudException.class)
-    public ResponseEntity<ApiError> handleUserNotFoundException(UserNotFoudException ex){
+    public ResponseEntity<ApiError> handleUserNotFoundException(UserNotFoudException ex) {
         ApiError error = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
-
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
         ApiError error = new ApiError(HttpStatus.valueOf(statusCode.value()), ex.getMessage());

@@ -17,7 +17,6 @@
       </h3>
     </div>
   </div>
-
   <div v-else class="flex flex-col justify-between items-center min-h-screen bg-gradient-to-bl from-white to-blue-200">
     <GeneralLogos></GeneralLogos>
     <div class="flex-1 w-full max-w-md mx-auto my-10 p-8">
@@ -37,11 +36,10 @@
       </p>
     </div>
   </div>
-
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import axios from "axios";
 import BACK_URL from "../../config/variables.js"
 
@@ -50,21 +48,15 @@ const people = ref(1);
 const peopleInQueue = ref(0);
 const peopleCount = ref(0);
 
+let intervalId;
 
-function joinQueue(newPeople) {
+const joinQueue = (newPeople) => {
   people.value = newPeople;
   postData();
-}
+};
 
-let token = null;
-if (typeof window !== "undefined") {
-  token = localStorage.getItem("token");
-}
-
-let name = null;
-if (typeof window !== "undefined") {
-  name = localStorage.getItem("name");
-}
+const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+const name = typeof window !== "undefined" ? localStorage.getItem("name") : null;
 
 const fetchPeopleInQueue = async () => {
   try {
@@ -76,7 +68,7 @@ const fetchPeopleInQueue = async () => {
           Authorization: `Bearer ${token}`,
         },
       });
-    peopleInQueue.value = response.data;
+      peopleInQueue.value = response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -87,17 +79,38 @@ const fetchPositionCount = async () => {
 
   try {
     const response = await axios.get(
-      `${BACK_URL}/api/queue/${id}`,
+      `${BACK_URL}/api/queue/id/${id}`,
       {
         headers: {
           "ngrok-skip-browser-warning": "69420",
           Authorization: `Bearer ${token}`,
         },
       });
-    if (response.data != 0) {
+    if (response.data !== 0) {
       peopleCount.value = response.data;
     } else {
       peopleCount.value = 0;
+      inQueue.value = false;
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+const fetchUserByName = async () => {
+  try {
+    const response = await axios.get(
+      `${BACK_URL}/api/queue/name/${name}`,
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    if (response.status === 200) {
+      inQueue.value = true;
+      fetchPositionCount();
+    } else if (response.status === 404) {
       inQueue.value = false;
     }
   } catch (error) {
@@ -120,18 +133,9 @@ const postData = async () => {
         },
       }
     );
-
     localStorage.setItem("id", response.data.id);
-
     inQueue.value = true;
     fetchPositionCount();
-
-    if (inQueue.value) {
-      intervalId = setInterval(() => {
-        fetchPositionCount()
-      }, 5000);
-    }
-
   } catch (error) {
     console.error("Error post data:", error);
   }
@@ -148,9 +152,7 @@ const deleteData = async () => {
           "ngrok-skip-browser-warning": "69420",
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-
+      });
     inQueue.value = false;
     clearInterval(intervalId);
   } catch (error) {
@@ -158,9 +160,24 @@ const deleteData = async () => {
   }
 };
 
-let intervalId;
+// Watch vigila el valor de inQueue
+watch(inQueue, (newVal) => {
+  clearInterval(intervalId);
+  if (newVal) {
+    intervalId = setInterval(fetchPositionCount, 2000); // Si es true hace el fecth de la posicion de la persona en la cola
+  } else {
+    intervalId = setInterval(fetchPeopleInQueue, 2000); // Si es false hace el fecth de la cantidad de personas en cola
+  }
+});
+
 onMounted(() => {
+  fetchUserByName();
   fetchPeopleInQueue();
+  if(inQueue.value){
+    intervalId = setInterval(fetchPositionCount, 2000);
+  }else{
+    intervalId = setInterval(fetchPeopleInQueue, 2000);
+  }
 });
 
 onUnmounted(() => {
@@ -169,7 +186,7 @@ onUnmounted(() => {
 
 definePageMeta({
   layout: "user"
-})
+});
 </script>
 
 <style scoped>

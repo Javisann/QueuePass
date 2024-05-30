@@ -32,6 +32,7 @@ public class FileSystemStorageService implements StorageService {
 
     /**
      * Constructor de la clase FileSystemStorageService.
+     *
      * @param dirname el nombre del directorio raíz donde se almacenarán los archivos.
      */
     public FileSystemStorageService(@Value("${system.storage.dirname}") String dirname) {
@@ -40,6 +41,7 @@ public class FileSystemStorageService implements StorageService {
 
     /**
      * Almacena el archivo en el sistema de archivos.
+     *
      * @param file el archivo a almacenar.
      * @return el nombre del archivo almacenado.
      * @throws StorageException si ocurre un error al almacenar el archivo.
@@ -87,8 +89,10 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to store file.", e);
         }
     }
+
     /**
      * Carga todos los archivos almacenados en el sistema de archivos.
+     *
      * @return un Stream de Paths que representa los archivos almacenados.
      * @throws StorageException si ocurre un error al leer los archivos almacenados.
      */
@@ -102,8 +106,10 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to read stored files", e);
         }
     }
+
     /**
      * Carga un archivo específico del sistema de archivos.
+     *
      * @param filename el nombre del archivo a cargar.
      * @return el Path del archivo cargado.
      */
@@ -114,6 +120,7 @@ public class FileSystemStorageService implements StorageService {
 
     /**
      * Carga un archivo como un recurso.
+     *
      * @param filename el nombre del archivo a cargar.
      * @return el recurso cargado.
      * @throws StorageFileNotFoundException si el archivo no existe o no se puede leer.
@@ -136,6 +143,7 @@ public class FileSystemStorageService implements StorageService {
 
     /**
      * Verifica si un recurso existe en el sistema de archivos.
+     *
      * @param filename el nombre del archivo a verificar.
      * @return true si el archivo existe, false en caso contrario.
      */
@@ -158,6 +166,7 @@ public class FileSystemStorageService implements StorageService {
 
     /**
      * Inicializa el almacenamiento creando el directorio raíz si no existe.
+     *
      * @throws StorageException si ocurre un error al inicializar el almacenamiento.
      */
     @Override

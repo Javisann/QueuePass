@@ -11,5 +11,4 @@ public interface PlateRepository extends JpaRepository<PlateModel, Long> {
     public ArrayList<PlateModel> findByType(String type);
 
     public Optional<PlateModel> findByName(String name);
-
 }

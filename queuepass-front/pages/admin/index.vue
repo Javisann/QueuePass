@@ -13,7 +13,7 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">ID</th>
-                            <th scope="col" class="px-6 py-3">Fecha</th>
+                            <th scope="col" class="px-6 py-3">Hora</th>
                             <th scope="col" class="px-6 py-3">Nombre</th>
                             <th scope="col" class="px-6 py-3">Numero de personas</th>
                             <th scope="col" class="px-6 py-3">
@@ -28,8 +28,8 @@
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ item.id }}
                             </th>
-                            <td class="px-6 py-4">{{ item.name }}</td>
                             <td class="px-6 py-4">{{ item.date }}</td>
+                            <td class="px-6 py-4">{{ item.name }}</td>
                             <td class="px-6 py-4">{{ item.num_personas }}</td>
                             <td class="px-6 py-4">
                                 <button @click="openPopupDelete(item.id)" type="button"
@@ -83,15 +83,11 @@
             </div>
         </div>
     </center>
-
-
 </template>
 
 <script>
 import axios from 'axios';
 import BACK_URL from '~/config/variables';
-
-
 
 export default {
     setup() {
@@ -101,6 +97,8 @@ export default {
         const showPopupDelete = ref(false);
         const selectedId = ref(0);
 
+        let intervalId;
+
         const openPopupDelete = (id) => {
             showPopupDelete.value = true;
             selectedId.value = id;
@@ -109,6 +107,7 @@ export default {
             showPopupDelete.value = false;
             selectedId.value = null;
         };
+
         let token = null;
         if (typeof window !== "undefined") {
             token = localStorage.getItem("token");
@@ -125,11 +124,10 @@ export default {
                         },
                     }
                 );
-
                 data.value = response.data;
-
                 if (!data.value.length > 0) return;
 
+                // Para parsear la fecha y coger solo la hora
                 const items = response.data.map(item => {
                     const date = new Date(item.date);
                     const hour = date.toLocaleTimeString('es-ES', {
@@ -141,9 +139,7 @@ export default {
                         ...item, // los 3 puntos son para coger todas las propiedades de item
                         date: hour // este cambia la propidad date
                     };
-
                 });
-                
                 data.value = items;
             } catch (error) {
                 data.value = null;
@@ -154,9 +150,7 @@ export default {
         };
 
         const deleteData = async () => {
-
             const id = new Number(selectedId.value);
-
             try {
                 await axios.delete(
                     `${BACK_URL}/api/queue/${id}`,
@@ -172,14 +166,12 @@ export default {
             }
         };
 
-        let intervalId;
         onMounted(() => {
             fetchData();
             intervalId = setInterval(() => {
                 fetchData()
-            }, 2000);
+            }, 500);
         });
-
         onUnmounted(() => {
             clearInterval(intervalId);
         });
@@ -194,7 +186,6 @@ export default {
             showPopupDelete,
             selectedId
         }
-
     }
 };
 

@@ -1,7 +1,8 @@
 <template>
   <form class="max-w-xs mx-auto">
     <div class="flex flex-col items-center">
-      <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de personas:</label>
+      <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de
+        personas:</label>
       <div class="flex justify-center items-center mb-6">
         <button type="button" id="decrement-button" @click="people > 1 ? people-- : null" :disabled="people === 0"
           data-input-counter-decrement="quantity-input"
@@ -11,7 +12,6 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
           </svg>
         </button>
-
         <input type="text" id="quantity-input" v-model="people" data-input-counter
           aria-describedby="helper-text-explanation"
           class=" bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -26,7 +26,6 @@
           </svg>
         </button>
       </div>
-
       <button @click="joinQueue" type="button"
         class="block w-full text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
         Unirse a la cola

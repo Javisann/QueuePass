@@ -47,7 +47,7 @@ public class JwtUtils {
                 .withSubject(username)
                 .withClaim("authorities", authorities)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 31536000000L))
                 .withJWTId(UUID.randomUUID().toString())
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .sign(algorithm);
@@ -90,7 +90,7 @@ public class JwtUtils {
      * Obtiene una claim específica del objeto DecodedJWT.
      *
      * @param decodedJWT el objeto DecodedJWT
-     * @param claimName el nombre de la claim a obtener
+     * @param claimName  el nombre de la claim a obtener
      * @return la claim específica del objeto DecodedJWT
      */
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {

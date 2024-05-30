@@ -110,7 +110,7 @@ CREATE TABLE `queue` (
   `name` varchar(255) DEFAULT NULL,
   `num_personas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +196,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (1,1),(2,2),(3,2),(9,2);
+INSERT INTO `user_roles` VALUES (1,1),(2,2),(3,2),(9,2),(11,2);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +218,7 @@ CREATE TABLE `users` (
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_r43af9ap4edm43mmtq01oddj6` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,_binary '',_binary '',_binary '',_binary '','$2a$10$YqI4tAh7x6AJK6k2acxYYeVpo/rB.Cs.4cXFxJPfMIBe8OzVUivrm','Javier@gmail.com','Javier Sanchez'),(2,_binary '',_binary '',_binary '',_binary '','$2a$10$pQIliJ.JJN8X4yUhncxRzuMU3K8FosJia/thCTHpYviqYLsBhkHGe','Alvaro@gmail.com','Alvaro Perez'),(3,_binary '',_binary '',_binary '',_binary '','$2a$10$gTKHdqgembbnsxYoMCdZr.j3FR1ifc/1GrGkZKrWiIdNJOgHCJ7hK','David@gmail.com','David Garcia'),(9,_binary '',_binary '',_binary '',_binary '','$2a$10$yNmS.hP2c0QaZgrbxZ7gneiYigy7EPUJhLsjE12ijd7cNkfUtVQFu','sergio@gmail.com','Sergio Crespo');
+INSERT INTO `users` VALUES (1,_binary '',_binary '',_binary '',_binary '','$2a$10$YqI4tAh7x6AJK6k2acxYYeVpo/rB.Cs.4cXFxJPfMIBe8OzVUivrm','admin@gmail.com','Admin'),(2,_binary '',_binary '',_binary '',_binary '','$2a$10$pQIliJ.JJN8X4yUhncxRzuMU3K8FosJia/thCTHpYviqYLsBhkHGe','Alvaro@gmail.com','Alvaro Perez'),(3,_binary '',_binary '',_binary '',_binary '','$2a$10$gTKHdqgembbnsxYoMCdZr.j3FR1ifc/1GrGkZKrWiIdNJOgHCJ7hK','David@gmail.com','David Garcia'),(9,_binary '',_binary '',_binary '',_binary '','$2a$10$yNmS.hP2c0QaZgrbxZ7gneiYigy7EPUJhLsjE12ijd7cNkfUtVQFu','sergio@gmail.com','Sergio Crespo'),(11,_binary '',_binary '',_binary '',_binary '','$2a$10$7Rob4lbAj18qjCcMjtbpo.jQcjDazW2ShgSPWh.METEzzvGE5ZslO','luis@gmail.com','Luis Vaquero');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -240,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-29 23:01:19
+-- Dump completed on 2024-05-30 19:09:45

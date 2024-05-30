@@ -29,6 +29,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
     /**
      * Constructor de la clase JwtTokenValidator.
+     *
      * @param jwtUtils Objeto JwtUtils utilizado para validar el token JWT.
      */
     public JwtTokenValidator(JwtUtils jwtUtils) {
@@ -37,8 +38,9 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
     /**
      * Método que se ejecuta para filtrar cada solicitud.
-     * @param request Objeto HttpServletRequest que representa la solicitud.
-     * @param response Objeto HttpServletResponse que representa la respuesta.
+     *
+     * @param request     Objeto HttpServletRequest que representa la solicitud.
+     * @param response    Objeto HttpServletResponse que representa la respuesta.
      * @param filterChain Objeto FilterChain utilizado para continuar con la cadena de filtros.
      */
     @Override

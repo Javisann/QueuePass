@@ -29,8 +29,8 @@ public class QueueModel {
 
     // Funcion para que guarde la fecha actual en la base de datos
     @PrePersist
-    protected void onCreated(){
-        if(this.date == null){
+    protected void onCreated() {
+        if (this.date == null) {
             this.date = LocalDateTime.now();
         }
     }
