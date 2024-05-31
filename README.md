@@ -28,6 +28,8 @@ This project is focused on creating a web application that allows customers to j
 
 - [Installation](#installation-mysql)
 
+- [Use of the application](#use-of-the-application)
+
 - [Author](#author)
 
 ## Description
@@ -124,6 +126,11 @@ Run the application with the command
 ```npm
   npm run dev
 ```
+
+## Use of the application
+
+[QueuePass - Use of the application | Video](https://youtu.be/T9ccvOxqMyE)
+
 ## Author
 
 [<img src="https://avatars.githubusercontent.com/u/66449602?v=4" width=115><br><sub>Javier Sánchez Prieto</sub>](https://github.com/Javisann)
