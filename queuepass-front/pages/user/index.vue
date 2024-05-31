@@ -164,9 +164,9 @@ const deleteData = async () => {
 watch(inQueue, (newVal) => {
   clearInterval(intervalId);
   if (newVal) {
-    intervalId = setInterval(fetchPositionCount, 2000); // Si es true hace el fecth de la posicion de la persona en la cola
+    intervalId = setInterval(fetchPositionCount, 500); // Si es true hace el fecth de la posicion de la persona en la cola
   } else {
-    intervalId = setInterval(fetchPeopleInQueue, 2000); // Si es false hace el fecth de la cantidad de personas en cola
+    intervalId = setInterval(fetchPeopleInQueue, 500); // Si es false hace el fecth de la cantidad de personas en cola
   }
 });
 
@@ -174,9 +174,9 @@ onMounted(() => {
   fetchUserByName();
   fetchPeopleInQueue();
   if(inQueue.value){
-    intervalId = setInterval(fetchPositionCount, 2000);
+    intervalId = setInterval(fetchPositionCount, 500);
   }else{
-    intervalId = setInterval(fetchPeopleInQueue, 2000);
+    intervalId = setInterval(fetchPeopleInQueue, 500);
   }
 });
 

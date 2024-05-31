@@ -57,7 +57,7 @@
               <td class="px-6 py-4">{{ item.type }}</td>
               <td class="px-6 py-4">{{ item.description }}</td>
               <td class="px-6 py-4">{{ item.price }}€</td>
-              <td class="px-6 py-4"><img :src="item.image" style="width: 150px !important;" /></td>
+              <td class="px-6 py-4"><img :src="item.image[1]" style="width: 150px !important;" /></td>
               <td class="px-6 py-4">
                 <button @click="openPopupUpdate(item)" type="button"
                   class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
@@ -178,7 +178,7 @@
           <button @click="
             updateData();
           closePopup();
-          " type="submit"
+          "
             class="text-white inline-flex items-center bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 me-1 -ms-1 w-4 h-4" viewBox="0 0 20 20">
               <path fill="currentColor" d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z" />
@@ -269,9 +269,6 @@ import { ref } from "vue";
 import axios from "axios";
 import BACK_URL from "../../config/variables.js"
 
-definePageMeta({
-  layout: "admin-layout",
-});
 export default {
   setup() {
     const showPopupDelete = ref(false);
@@ -303,9 +300,20 @@ export default {
       selectedId.value = id;
     };
     const openPopupUpdate = (item) => {
-      selectedItem.value = item;
+
+      const itemToUpdate = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        type: item.type,
+        description: item.description,
+        image: item.image[0],
+      } 
+
+      selectedItem.value = itemToUpdate;
       showPopupUpdate.value = true;
     };
+
 
     const openPopupCreate = () => {
       showPopupCreate.value = true;
@@ -339,47 +347,47 @@ export default {
               },
             }
           );
-          data.value = await Promise.all(response.data.map(async (item) => {
-            if (item.image != null) {
-              const urlParts = item.image.split("/").slice(3).join("/");
-              const imageUrl = `${BACK_URL}/${urlParts}`;
-              //item.image = imageUrl;
 
+          const modifiedData = await Promise.all(
+            response.data.map(async (item) => {
+              if (item.image != null) {
+                const urlParts = item.image.split("/").slice(3).join("/");
+                const imageUrl = `${BACK_URL}/${urlParts}`;
 
-              // Petición para obtener el contenido de la imagen
-              try {
+                // Fetch image content as blob
                 const imageResponse = await axios.get(imageUrl, {
-                  headers: { "ngrok-skip-browser-warning": "69420" },
-                  responseType: 'arraybuffer' // Establece el tipo de respuesta como arraybuffer
+                  headers: {
+                    "ngrok-skip-browser-warning": "69420",
+                    Authorization: `Bearer ${token}`,
+                  },
+                  responseType: "blob",
                 });
 
-                // Convierte el array buffer a un blob
-                const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });
-
-                // Utiliza FileReader para leer el blob y obtener la URL de datos
+                // Read image content as base64
                 const reader = new FileReader();
-                reader.readAsDataURL(blob);
+                reader.readAsDataURL(imageResponse.data);
 
-                // Devuelve una promesa para esperar la finalización de la lectura del archivo
-                return new Promise((resolve) => {
+                // Return a promise that resolves when FileReader is done
+                return new Promise((resolve, reject) => {
                   reader.onloadend = () => {
-                    const imageDataUrl = reader.result;
-                    item.image = imageDataUrl;
+                    // Set item.image as an array containing URL and base64 content
+                    item.image = [imageUrl, reader.result];
                     resolve(item);
                   };
+                  reader.onerror = () => {
+                    reject(reader.error);
+                  };
                 });
-              } catch (e) {
-                console.error("Error fetching image:", e);
-                item.image = null;
-                return new Promise((resolve) => {
-                  resolve(item);
-                });
+              }else{
+                item.image = [null, null];
               }
-            }
-            return new Promise((resolve) => {
-              resolve(item);
-            });
-          }));
+              return item;
+            })
+          );
+          
+          console.log(modifiedData);
+
+          data.value = modifiedData;
         } catch (error) {
           data.value = null;
           console.error("Error fetching data:", error);
@@ -415,6 +423,7 @@ export default {
     //Llamada a la API para actualizar un plato
     const updateData = async () => {
       try {
+        console.log(selectedItem.value);
         const formData = new FormData();
         formData.append("new", new Blob([JSON.stringify(selectedItem.value)], { type: "application/json" }));
 
@@ -437,8 +446,8 @@ export default {
       } catch (error) {
         console.error("Error updating data:", error);
       } finally {
-        loading.value = false;
         fetchData();
+        loading.value = false;
       }
     };
     //Llamada a la API para crear un plato
@@ -492,6 +501,11 @@ export default {
     };
   },
 };
+
+
+definePageMeta({
+  layout: "admin-layout",
+});
 </script>
 
 <style>
